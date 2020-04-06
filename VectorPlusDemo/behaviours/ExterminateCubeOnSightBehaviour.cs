@@ -41,7 +41,7 @@ namespace VectorPlusDemo.behaviours
         {
             if (arg.ObjectType == ObjectType.BlockLightcube1)
             {
-                controller.EnqueueAction(new ExterminateAction(this, null)); // TODO: why doesn't timeout work?
+                controller.EnqueueAction(new ExterminateAction(this, null));
             }
         }
     }

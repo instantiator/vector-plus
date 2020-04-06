@@ -11,5 +11,12 @@
   <ItemGroup>
     <Folder Include="behaviours\" />
     <Folder Include="Actions\" />
+    <Folder Include="Audio\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Audio\gun.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Audio\gun.wav" />
   </ItemGroup>
 </Project>

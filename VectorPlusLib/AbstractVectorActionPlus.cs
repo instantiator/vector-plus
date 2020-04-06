@@ -78,6 +78,7 @@ namespace VectorPlusLib
                 catch (Exception e)
                 {
                     Exception = e;
+                    Console.WriteLine("! " + e.Message);
                     State = ActionState.Failed;
                 }
             }

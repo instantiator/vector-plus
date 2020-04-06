@@ -12,7 +12,12 @@ namespace VectorPlusDemo.Actions
 
         protected override async Task<bool> ExecuteImplementationAsync(IVectorControllerPlus controller)
         {
+            await controller.Robot.Behavior.SetLiftHeight(0.5f);
             await controller.Robot.Behavior.SayText("Exterminate! Exterminate!", true);
+
+            await controller.Robot.Behavior.GoToCube(50.0f);
+            await controller.Robot.Behavior.SetLiftHeight(0.0f);
+
             return true;
         }
     }
