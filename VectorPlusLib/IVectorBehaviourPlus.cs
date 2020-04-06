@@ -9,6 +9,7 @@ namespace VectorPlusLib
         Guid Id { get; }
 
         bool NeedsPermanentRobotControl { get; }
+        bool NeedsPermanentObjectAppearanceMonitoring { get; }
 
         Task SetControllerAsync(IVectorControllerPlus controller);
 

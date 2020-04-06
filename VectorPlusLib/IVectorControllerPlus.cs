@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Anki.Vector;
+using Anki.Vector.Objects;
 using static VectorPlusLib.VectorControllerPlus;
 
 namespace VectorPlusLib
@@ -17,6 +18,9 @@ namespace VectorPlusLib
         event Func<VectorBehaviourPlusReport, Task> OnBehaviourReport;
         event Func<IVectorActionPlus, ActionEvent, Task> OnActionEvent;
 
+        event Func<ObjectSeenState, Task> OnObjectAppeared;
+        event Func<ObjectSeenState, Task> OnObjectDisappeared;
+
         Robot Robot { get; }
         ConnectedState Connection { get; }
 
@@ -30,5 +34,7 @@ namespace VectorPlusLib
 
         Task ReportAsync(VectorBehaviourPlusReport report);
         IEnumerable<VectorBehaviourPlusReport> BehaviourReports { get; }
+
+        Task StartMainLoopAsync(bool stopOnKeypress = true);
     }
 }

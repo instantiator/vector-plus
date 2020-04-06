@@ -21,16 +21,25 @@ namespace VectorPlusLib
         protected Task mainLoopTask;
         protected CancellationTokenSource cancelMainLoop;
 
-        protected AbstractVectorBehaviourPlus(bool needsPermanentControl, bool usesMotionDetection = false, bool usesFaces = false, bool usesCustomObjects = false, bool usesMirrorMode = false)
+        protected AbstractVectorBehaviourPlus(
+            bool needsPermanentControl,
+            bool needsPermanentObjectAppearanceMonitoring,
+            bool usesMotionDetection = false,
+            bool usesFaces = false,
+            bool usesCustomObjects = false,
+            bool usesMirrorMode = false)
         {
             Id = Guid.NewGuid();
 
+            this.NeedsPermanentObjectAppearanceMonitoring = needsPermanentObjectAppearanceMonitoring;
             this.NeedsPermanentRobotControl = needsPermanentControl;
             this.usesCustomObjectDetection = usesCustomObjects;
             this.usesFaceDetection = usesFaces;
             this.usesMirrorMode = usesMirrorMode;
             this.usesMotionDetection = usesMotionDetection;
         }
+
+        public bool NeedsPermanentObjectAppearanceMonitoring { get; private set; }
 
         public bool NeedsPermanentRobotControl { get; private set; }
 

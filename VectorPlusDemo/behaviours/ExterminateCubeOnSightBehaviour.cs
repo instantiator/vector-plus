@@ -13,7 +13,7 @@ namespace VectorPlusDemo.behaviours
         private readonly TimeSpan exterminationRefectory = TimeSpan.FromSeconds(10); // can't just keep yelling exterminate like a bloody dalek
         private ObjectType lastObservation;
 
-        public ExterminateCubeOnSightBehaviour() : base(false, false, false, false, false)
+        public ExterminateCubeOnSightBehaviour() : base(false, true, false, false, false, false)
         {
         }
 
@@ -29,27 +29,20 @@ namespace VectorPlusDemo.behaviours
 
         protected override async Task RegisterWithRobotEventsAsync(EventComponent events)
         {
-            // This would have been 'object appeared' under the python SDK - but that's not available to us...
-            events.ObservedObject += Events_ObservedObject;
-        }
-
-        private void Events_ObservedObject(object sender, Anki.Vector.Events.RobotObservedObjectEventArgs e)
-        {
-            if (e.ObjectType != lastObservation)
-            {
-                Console.WriteLine("= Observed object of type: " + e.ObjectType.ToString());
-                lastObservation = e.ObjectType;
-            }
-            if (e.ObjectType == ObjectType.BlockLightcube1 && lastExtermination + exterminationRefectory < DateTime.Now)
-            {
-                lastExtermination = DateTime.Now;
-                controller.EnqueueAction(new ExterminateAction(this, null)); // TODO: why doesn't timeout work?
-            }
+            controller.OnObjectAppeared += Controller_OnObjectAppeared;
         }
 
         protected override async Task UnregisterFromRobotEventsAsync(EventComponent events)
         {
-            events.ObservedObject -= Events_ObservedObject;
+            controller.OnObjectAppeared -= Controller_OnObjectAppeared;
+        }
+
+        private async Task Controller_OnObjectAppeared(ObjectSeenState arg)
+        {
+            if (arg.ObjectType == ObjectType.BlockLightcube1)
+            {
+                controller.EnqueueAction(new ExterminateAction(this, null)); // TODO: why doesn't timeout work?
+            }
         }
     }
 }

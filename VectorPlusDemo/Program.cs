@@ -16,7 +16,7 @@ namespace VectorPlusDemo
                 ReconnectDelay_ms = 2000
             };
 
-            await using (var controller = new VectorControllerPlus(config))
+            await using (IVectorControllerPlus controller = new VectorControllerPlus(config))
             {
                 controller.OnBehaviourReport += async report => Console.WriteLine(report.Description);
                 controller.OnConnectionChanged += async state => Console.WriteLine("! " + state.ToString());
@@ -25,11 +25,7 @@ namespace VectorPlusDemo
 
                 await controller.ConnectAsync();
 
-                bool exit = false;
-                while (!exit && !Console.KeyAvailable)
-                {
-                    await Task.Delay(500);
-                }
+                await controller.StartMainLoopAsync();
             }
 
         }
