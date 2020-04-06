@@ -49,8 +49,8 @@ namespace VectorPlusLib
             get
             {
                 if (!StartTimeout.HasValue) { return false; }
-                // TODO: something not right here - actions are timing out too soon
-                return Created + StartTimeout.Value > DateTime.Now;
+                var diff = DateTime.Now - Created;
+                return diff.Ticks > StartTimeout.Value.Ticks;
             }
         }
 
