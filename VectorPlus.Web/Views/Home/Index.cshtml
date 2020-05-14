@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>VectorPlus is a project to enhance Vector with some new behaviours.</p>
+
+    <h2>Getting started</h2>
+
+    <p>
+        VectorPlus communicates with your robot using the unofficial C# library
+        <a target="_blank" href="https://codaris.github.io/Anki.Vector.SDK/">Anki.Vector.SDK</a>.
+    </p>
+
+    @if ((bool)ViewData["Connected"])
+    {
+        <p>
+            Get started: <a href="/Connection">configure your connection</a>
+        </p>
+    }
+
+    <p>
+        <b>NB. VectorPlus should be running on the same wifi network as your Vector, which should be a 2.4GHz network.</b>
+        (Hopefully you already went through this particular pain point when you first set up Vector and his app.)
+    </p>
+
+    <h3>Other useful tools</h3>
+
+    <ul>
+        <li>Vector Explorer: <a href="https://www.weekendrobot.com/vectorexplorer">https://www.weekendrobot.com/vectorexplorer</a></li>
+        <li>VectorConfigure: <a href="https://www.weekendrobot.com/devtools">https://www.weekendrobot.com/devtools</a></li>
+    </ul>
+
+</div>

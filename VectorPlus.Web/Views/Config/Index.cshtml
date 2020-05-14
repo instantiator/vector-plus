@@ -1,0 +1,62 @@
+﻿@model ConfigViewModel
+
+@{
+    ViewData["Title"] = "Configuration";
+}
+
+<!-- class text-center -->
+    <div>
+        <h1 class="display-4">Configuration</h1>
+
+
+
+        <h2>Active behaviours</h2>
+        <ul>
+            @foreach (var behaviour in Model.ActiveBehaviours)
+            {
+                <li>
+                    @behaviour.Name (@behaviour.UniqueReference)
+                    <form>
+                        <button class="btn btn-info"
+                                formaction=@Url.Action(action: "DeactivateBehaviour", new { id = behaviour.UniqueReference })
+                                formmethod="post">Deactivate</button>
+                    </form>
+                </li>
+            }
+        </ul>
+
+        <h2>Available modules</h2>
+        <ul>
+            @foreach (var module in Model.AllModules)
+            {
+                <li>
+                    @module.Name (@module.UniqueReference)
+                    <form>
+                        <button class="btn btn-info"
+                                formaction=@Url.Action(action: "RemoveModule", new { id = module.UniqueReference })
+                                formmethod="post">Remove</button>
+                    </form>
+                    <ul>
+                        @foreach (var behaviour in module.Behaviours.Where(b => !Model.ActiveBehaviours.Any(ab => ab.Id.Equals(b.Id))))
+                        {
+                            <li>
+                                @behaviour.Name (@behaviour.UniqueReference)
+                                <form>
+                                    <button class="btn btn-info" 
+                                            formaction=@Url.Action(action: "ActivateBehaviour", new { id = behaviour.UniqueReference })
+                                            formmethod="post">Activate</button>
+                                </form>
+                            </li>
+                        }
+                    </ul>
+                </li>
+            }
+        </ul>
+
+        <h3>Upload a module DLL</h3>
+        <form enctype="multipart/form-data" method="post" asp-controller="Config" asp-action="UploadModule">
+            <input type="file" name="files">
+            <input type="submit" value="Upload" class="btn btn-info" />
+        </form>
+
+    </div>

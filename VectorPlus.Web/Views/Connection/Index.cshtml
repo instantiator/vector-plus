@@ -1,0 +1,71 @@
+﻿@model ConnectionViewModel
+
+@{
+    ViewData["Title"] = "Connection";
+}
+
+
+    <div>
+        <h1 class="display-4">Connection</h1>
+        <p>Manage the connection between VectorPlus and your Vector.</p>
+
+        <h2>Manual configuration</h2>
+
+        <form method="post" asp-controller="Connection" asp-action="Update">
+
+            @Html.ValidationSummary(true)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RoboConfig.RobotName, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.RoboConfig.RobotName)
+                    @Html.ValidationMessageFor(model => model.RoboConfig.RobotName)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RoboConfig.RobotSerial, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.RoboConfig.RobotSerial)
+                    @Html.ValidationMessageFor(model => model.RoboConfig.RobotSerial)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RoboConfig.Email, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.RoboConfig.Email)
+                    @Html.ValidationMessageFor(model => model.RoboConfig.Email)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RoboConfig.Password, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.RoboConfig.Password)
+                    @Html.ValidationMessageFor(model => model.RoboConfig.Password)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RoboConfig.IpOverrideStr, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.RoboConfig.IpOverrideStr)
+                    @Html.ValidationMessageFor(model => model.RoboConfig.IpOverrideStr)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </div>
+
+        </form>
+
+        <form method="post" asp-controller="Connection" asp-action="Remove">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Delete" class="btn btn-secondary" />
+            </div>
+        </form>
+    </div>

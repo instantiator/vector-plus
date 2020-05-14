@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Actions\" />
+    <Folder Include="Audio\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Audio\gun16.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Audio\gun16.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VectorPlus.Lib\VectorPlus.Lib.csproj" />
+  </ItemGroup>
+</Project>
