@@ -40,7 +40,7 @@ namespace VectorPlus.Demo.Behaviour.Behaviours
 
         private async Task Controller_OnObjectAppeared(ObjectSeenState arg)
         {
-            if (arg.ObjectType == ObjectType.BlockLightcube1 && RecoveredSinceTrigger)
+            if (arg.ObjectType == ObjectType.BlockLightcube1 && RecoveredSinceTrigger())
             {
                 RecordTrigger();
                 controller.EnqueueAction(new ExterminateAction(this, null));

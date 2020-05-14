@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
+using Anki.Vector.Objects;
 using VectorPlus.Lib;
 
 namespace VectorPlus.Demo.Behaviour.Actions
 {
     public class FaceSomeoneAction : AbstractVectorActionPlus
     {
+        private Random random = new Random();
+
         public FaceSomeoneAction(IVectorBehaviourPlus behaviour, TimeSpan? timeout) : base(behaviour, timeout, true)
         {
         }
@@ -16,15 +20,26 @@ namespace VectorPlus.Demo.Behaviour.Actions
             if (await WaitUntilReadyToInteractAsync(controller.Robot, TimeSpan.FromSeconds(5)))
             {
                 var status = await controller.Robot.Behavior.FindFaces();
+                var faces = controller.Robot.World.Objects.Where(o => o is Face).Select(o => o as Face);
+                var recentSpan = TimeSpan.FromSeconds(20);
+                var recentFaces = faces.Where(f => DateTime.Now - f.LastObservedTime < recentSpan);
 
-                // return true if Vector thinks it has succeeded
-                return
-                    status.Result == Anki.Vector.Types.BehaviorResultCode.Complete &&
-                    status.StatusCode == Anki.Vector.Types.StatusCode.Ok;
+                if (recentFaces.Count() > 0)
+                {
+                    int index = random.Next(0, faces.Count());
+                    var face = faces.ElementAt(index);
+                    var turned = await controller.Robot.Behavior.TurnTowardsFace(face, 2);
+                    return
+                        turned.Result == Anki.Vector.Types.ActionResultCode.ActionResultSuccess;
+                }
+                else
+                {
+                    return false; // no faces
+                }
             }
             else
             {
-                return false;
+                return false; // not ready to interact
             }
 
         }

@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - VectorPlus.Web</title>
+    <title>@ViewData["Title"] - VectorPlus</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -51,14 +51,16 @@
                 {
                     @ViewData["Connection"].ToString()
                 }
-                @if (ViewData["Connection"] == null || (IVectorControllerPlus.ConnectedState)ViewData["Connection"] == IVectorControllerPlus.ConnectedState.Disconnected)
-                {
-                    <button formaction=@Url.Action(action: "Reconnect") formmethod="post" class="btn btn-primary">Reconnect</button>
-                }
-                @if (ViewData["Connection"] != null && (IVectorControllerPlus.ConnectedState)ViewData["Connection"] == IVectorControllerPlus.ConnectedState.Connected)
-                {
-                    <button formaction=@Url.Action(action: "Disconnect") formmethod="post" class="btn btn-danger">Disconnect</button>
-                }
+                <div style="float: right;">
+                    @if (ViewData["Connection"] == null || (IVectorControllerPlus.ConnectedState)ViewData["Connection"] == IVectorControllerPlus.ConnectedState.Disconnected)
+                    {
+                        <button formaction=@Url.Action(action: "Reconnect") formmethod="post" class="btn btn-primary">Reconnect</button>
+                    }
+                    @if (ViewData["Connection"] != null && (IVectorControllerPlus.ConnectedState)ViewData["Connection"] == IVectorControllerPlus.ConnectedState.Connected)
+                    {
+                        <button formaction=@Url.Action(action: "Disconnect") formmethod="post" class="btn btn-danger">Disconnect</button>
+                    }
+                </div>
             </form>
         </div>
     </footer>

@@ -1,35 +1,69 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>VectorPlus is a project to enhance Vector with some new behaviours.</p>
-
-    <h2>Getting started</h2>
-
-    <p>
-        VectorPlus communicates with your robot using the unofficial C# library
-        <a target="_blank" href="https://codaris.github.io/Anki.Vector.SDK/">Anki.Vector.SDK</a>.
-    </p>
-
-    @if ((bool)ViewData["Connected"])
-    {
+    <div>
+        <h1 class="display-4">Welcome</h1>
         <p>
-            Get started: <a href="/Connection">configure your connection</a>
+            VectorPlus enhances the <s>Anki</s> Digital Dream Labs
+            <a href="https://support.digitaldreamlabs.com/collection/6-vector">Vector</a>
+            personal robot with some new behaviours.
         </p>
-    }
 
-    <p>
-        <b>NB. VectorPlus should be running on the same wifi network as your Vector, which should be a 2.4GHz network.</b>
-        (Hopefully you already went through this particular pain point when you first set up Vector and his app.)
-    </p>
+        <p>
+            VectorPlus communicates with your robot using the unofficial C# library
+            <a target="_blank" href="https://codaris.github.io/Anki.Vector.SDK/">Anki.Vector.SDK</a>.
+            It is designed to run continuously and maintain a connection to your Vector robot
+            over your home wifi network.
+        </p>
 
-    <h3>Other useful tools</h3>
+        <h2>Getting started</h2>
 
-    <ul>
-        <li>Vector Explorer: <a href="https://www.weekendrobot.com/vectorexplorer">https://www.weekendrobot.com/vectorexplorer</a></li>
-        <li>VectorConfigure: <a href="https://www.weekendrobot.com/devtools">https://www.weekendrobot.com/devtools</a></li>
-    </ul>
+        <ol>
+            <li><a href="/Connection">Set up your connection</a> to Vector</li>
+            <li>Download some behavioural modules for VectorPlus. (Coming soon!)</li>
+            <li><a href="/Config">Add and configure</a> your new VectorPlus behaviours.</li>
+        </ol>
 
-</div>
+        <h3>Other useful tools</h3>
+
+        <ul>
+            <li>Vector Explorer: <a href="https://www.weekendrobot.com/vectorexplorer">https://www.weekendrobot.com/vectorexplorer</a></li>
+            <li>VectorConfigure: <a href="https://www.weekendrobot.com/devtools">https://www.weekendrobot.com/devtools</a></li>
+        </ul>
+
+        <h2>Developers</h2>
+
+        <p>
+            VectorPlus behaviours are arranged into collections called modules.
+        </p>
+
+        <p>
+            For more information about developing new behaviours for VectorPlus, see:
+            <a href="https://github.com/instantiator/vector-plus">https://github.com/instantiator/vector-plus</a>
+        </p>
+
+        <h2>Credits</h2>
+
+        <p>
+            Huge credit to <a href="https://www.digitaldreamlabs.com/">Digital Dream Labs</a> for picking up where Anki
+            left off, maintaining and supporting both Cosmo and Vector robots.
+            If you haven't already purchased a subscription to updates, you can do so at their site.
+        </p>
+
+        <ul>
+            <li>This project was created and maintained by <a href="https://twitter.com/instantiator" target="_blank">Lewis Westbury</a>.</li>
+            <li>
+                The unofficial C# <a target="_blank" href="https://codaris.github.io/Anki.Vector.SDK/">Anki.Vector.SDK</a>
+                was created and maintained by <a target="_blank" href="https://github.com/codaris">Wayne Venables</a>.
+            </li>
+            <li>
+                This project was inspired by
+                <a href="https://github.com/rmountjoy92/VectorCloud">VectorCloud</a> and
+                <a href="https://github.com/rmountjoy92/VectorCloud2">VectorCloud2</a> python servers
+                created by <a href="https://github.com/rmountjoy92">rmountjoy92</a>.
+            </li>
+            <li>See also: <a href="https://developer.anki.com/vector/docs/index.html">The official Python Vector SDK</a>.</li>
+        </ul>
+
+    </div>

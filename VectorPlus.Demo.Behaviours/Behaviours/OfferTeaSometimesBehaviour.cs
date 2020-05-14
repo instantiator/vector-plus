@@ -32,16 +32,19 @@ namespace VectorPlus.Demo.Behaviour.Behaviours
             events.ChangedObservedFaceId += Events_ChangedObservedFaceId;
         }
 
-        private async void Events_ChangedObservedFaceId(object sender, Anki.Vector.Events.RobotChangedObservedFaceIdEventArgs e)
+        private void Events_ChangedObservedFaceId(object sender, Anki.Vector.Events.RobotChangedObservedFaceIdEventArgs e)
         {
-            var faces = await controller.Robot.Faces.GetEnrolledFaces();
-            var face = faces.Where(f => f.FaceId == e.NewId).SingleOrDefault();
-            var name = face?.Name;
+            var worldFace = controller.Robot.World.GetFaceById(e.NewId);
+            var name = worldFace.Name;
 
-            if (RecoveredSinceTrigger)
+            if (RecoveredSinceTrigger(name))
             {
-                RecordTrigger();
+                RecordTrigger(name);
                 controller.EnqueueAction(new StopAllMotorsAction(this, null));
+                if (worldFace != null)
+                {
+                    controller.EnqueueAction(new TurnToFaceAction(this, null, worldFace));
+                }
                 controller.EnqueueAction(new OfferTeaAction(this, null, name));
             }
         }

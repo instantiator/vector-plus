@@ -82,16 +82,6 @@ namespace VectorPlus.Web.Service
             return await ReconnectAsync();
         }
 
-        /// <summary>
-        /// Checks the configuration details provided, attempts to Vector's
-        /// certificate from the Anki/DDL server, and then connects to the
-        /// robot to fetch its identity guid.
-        /// </summary>
-        /// <param name="robotName"></param>
-        /// <param name="robotSerial"></param>
-        /// <param name="email"></param>
-        /// <param name="password"></param>
-        /// <param name="ipOverride"></param>
         public async Task<ActionResponseMessage> SetRoboConfigAsync(string robotName, string robotSerial, string email, string password, string ipOverride = null)
         {
             try

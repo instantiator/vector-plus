@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Anki.Vector;
@@ -23,8 +24,8 @@ namespace VectorPlus.Lib
         protected Task mainLoopTask;
         protected CancellationTokenSource cancelMainLoop;
 
-        protected DateTime lastTrigger;
-        protected TimeSpan refectoryPeriod;
+        protected Dictionary<string, DateTime> lastTriggers = new Dictionary<string, DateTime>();
+        protected TimeSpan refectoryPeriod = TimeSpan.FromMinutes(5);
 
         protected AbstractVectorBehaviourPlus(
             int id,
@@ -37,7 +38,6 @@ namespace VectorPlus.Lib
         {
             this.Id = Guid.NewGuid();
             this.UniqueReference = GetType().FullName + ":" + id;
-
             this.NeedsPermanentObjectAppearanceMonitoring = needsPermanentObjectAppearanceMonitoring;
             this.NeedsPermanentRobotControl = needsPermanentControl;
             this.usesCustomObjectDetection = usesCustomObjects;
@@ -55,17 +55,13 @@ namespace VectorPlus.Lib
 
         protected void SetRefectoryPeriod(TimeSpan span) { this.refectoryPeriod = span; }
 
-        protected void RecordTrigger() { this.lastTrigger = DateTime.Now; }
+        protected void RecordTrigger(string key = null) { lastTriggers[key ?? "default"] = DateTime.Now; }
 
-        protected bool RecoveredSinceTrigger
+        protected bool RecoveredSinceTrigger(string key = null)
         {
-            get
-            {
-                return
-                    lastTrigger == null ||
-                    refectoryPeriod == null ||
-                    DateTime.Now - lastTrigger > refectoryPeriod;
-            }
+            return
+                !lastTriggers.ContainsKey(key ?? "default") ||
+                DateTime.Now - lastTriggers[key] > refectoryPeriod;
         }
 
         public async Task SetControllerAsync(IVectorControllerPlus controller)
