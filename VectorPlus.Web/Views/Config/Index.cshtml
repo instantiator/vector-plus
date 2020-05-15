@@ -5,58 +5,92 @@
 }
 
 <!-- class text-center -->
-    <div>
-        <h1 class="display-4">Configuration</h1>
+<div>
+    <h1 class="display-4">Configuration</h1>
 
+    <div class="row">
+        <div class="col">
 
+            <div class="card">
+                <div class="card-header">Available modules</div>
 
-        <h2>Active behaviours</h2>
-        <ul>
-            @foreach (var behaviour in Model.ActiveBehaviours)
-            {
-                <li>
-                    @behaviour.Name (@behaviour.UniqueReference)
-                    <form>
-                        <button class="btn btn-info"
-                                formaction=@Url.Action(action: "DeactivateBehaviour", new { id = behaviour.UniqueReference })
-                                formmethod="post">Deactivate</button>
-                    </form>
-                </li>
-            }
-        </ul>
-
-        <h2>Available modules</h2>
-        <ul>
-            @foreach (var module in Model.AllModules)
-            {
-                <li>
-                    @module.Name (@module.UniqueReference)
-                    <form>
-                        <button class="btn btn-info"
-                                formaction=@Url.Action(action: "RemoveModule", new { id = module.UniqueReference })
-                                formmethod="post">Remove</button>
-                    </form>
+                <div class="card-body">
                     <ul>
-                        @foreach (var behaviour in module.Behaviours.Where(b => !Model.ActiveBehaviours.Any(ab => ab.Id.Equals(b.Id))))
+                        @foreach (var module in Model.AllModules)
                         {
                             <li>
-                                @behaviour.Name (@behaviour.UniqueReference)
+                                @module.Name
+                                <!-- @module.UniqueReference -->
                                 <form>
-                                    <button class="btn btn-info" 
-                                            formaction=@Url.Action(action: "ActivateBehaviour", new { id = behaviour.UniqueReference })
-                                            formmethod="post">Activate</button>
+                                    <button class="btn btn-danger"
+                                            formaction=@Url.Action(action: "RemoveModule", new { id = module.UniqueReference })
+                                            formmethod="post">
+                                        Remove
+                                    </button>
+                                </form>
+                                <ul>
+                                    @foreach (var behaviour in module.Behaviours.Where(b => !Model.ActiveBehaviours.Any(ab => ab.Id.Equals(b.Id))))
+                                    {
+                                        <li>
+                                            @behaviour.Name<br />
+                                            <!-- @behaviour.UniqueReference -->
+                                            <form>
+                                                <button class="btn btn-success"
+                                                        formaction=@Url.Action(action: "ActivateBehaviour", new { id = behaviour.UniqueReference })
+                                                        formmethod="post">
+                                                    Activate
+                                                </button>
+                                            </form>
+                                        </li>
+                                    }
+                                </ul>
+                            </li>
+                        }
+                    </ul>
+                </div><!-- card-body -->
+
+                <div class="card-footer">
+                    <form enctype="multipart/form-data" method="post" asp-controller="Config" asp-action="UploadModule">
+                        <div class="custom-file">
+                            <input type="file" name="files" accept=".dll" class="custom-file-input" id="filesInput" />
+                            <label class="custom-file-label" for="filesInput">Choose a plugin DLL</label>
+                        </div>
+                        <p>
+                            <input type="submit" value="Upload" class="btn btn-primary" style="margin-top: 10px;" />
+                        </p>
+                    </form>
+                </div><!-- card-body -->
+
+            </div><!-- card -->
+
+        </div><!-- col -->
+        <div class="col">
+
+            <div class="card">
+                <div class="card-header">Active behaviours</div>
+                <div class="card-body">
+
+                    <ul>
+                        @foreach (var behaviour in Model.ActiveBehaviours)
+                        {
+                            <li>
+                                @behaviour.Name
+                                <!-- @behaviour.UniqueReference -->
+                                <form>
+                                    <button class="btn btn-danger"
+                                            formaction=@Url.Action(action: "DeactivateBehaviour", new { id = behaviour.UniqueReference })
+                                            formmethod="post">
+                                        Deactivate
+                                    </button>
                                 </form>
                             </li>
                         }
                     </ul>
-                </li>
-            }
-        </ul>
 
-        <h3>Upload a module DLL</h3>
-        <form enctype="multipart/form-data" method="post" asp-controller="Config" asp-action="UploadModule">
-            <input type="file" name="files">
-            <input type="submit" value="Upload" class="btn btn-info" />
-        </form>
+                </div>
+            </div>
 
-    </div>
+        </div><!-- col -->
+    </div><!-- row -->
+
+</div>
