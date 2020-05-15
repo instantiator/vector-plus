@@ -4,87 +4,82 @@
     ViewData["Title"] = "Connection";
 }
 
+<div>
+    <div class="row">
+        <div class="col">
 
-    <div>
-        <h1 class="display-4">Connection</h1>
-        <p>Manage the connection between VectorPlus and your Vector.</p>
+            <div class="card">
+                <div class="card-header">Manual configuration</div>
 
-        <h2>Manual configuration</h2>
+                <div class="card-body">
+                    <form method="post" asp-controller="Connection" asp-action="Update">
 
-        <form method="post" asp-controller="Connection" asp-action="Update">
+                        @Html.ValidationSummary(true)
 
-            @Html.ValidationSummary(true)
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RoboConfig.RobotName, new { /* @class = "control-label" */ })
+                            @Html.EditorFor(model => model.RoboConfig.RobotName)
+                            <small>eg. Vector-A1B2</small>
+                            @Html.ValidationMessageFor(model => model.RoboConfig.RobotName)
+                        </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.RoboConfig.RobotName, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.RoboConfig.RobotName)
-                    @Html.ValidationMessageFor(model => model.RoboConfig.RobotName)
-                </div>
-            </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RoboConfig.RobotSerial, new { @class = "control-label" })
+                            @Html.EditorFor(model => model.RoboConfig.RobotSerial)
+                            <small>AKA ESN, eg. 009012AB</small>
+                            @Html.ValidationMessageFor(model => model.RoboConfig.RobotSerial)
+                        </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.RoboConfig.RobotSerial, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.RoboConfig.RobotSerial)
-                    @Html.ValidationMessageFor(model => model.RoboConfig.RobotSerial)
-                </div>
-            </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RoboConfig.Email, new { @class = "control-label" })
+                            @Html.EditorFor(model => model.RoboConfig.Email)
+                            @Html.ValidationMessageFor(model => model.RoboConfig.Email)
+                        </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.RoboConfig.Email, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.RoboConfig.Email)
-                    @Html.ValidationMessageFor(model => model.RoboConfig.Email)
-                </div>
-            </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RoboConfig.Password, new { @class = "control-label" })
+                            @Html.EditorFor(model => model.RoboConfig.Password)
+                            @Html.ValidationMessageFor(model => model.RoboConfig.Password)
+                        </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.RoboConfig.Password, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.RoboConfig.Password)
-                    @Html.ValidationMessageFor(model => model.RoboConfig.Password)
-                </div>
-            </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RoboConfig.IpOverrideStr, new { @class = "control-label" })
+                            @Html.EditorFor(model => model.RoboConfig.IpOverrideStr)
+                            @Html.ValidationMessageFor(model => model.RoboConfig.IpOverrideStr)
+                        </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.RoboConfig.IpOverrideStr, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.RoboConfig.IpOverrideStr)
-                    @Html.ValidationMessageFor(model => model.RoboConfig.IpOverrideStr)
-                </div>
-            </div>
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                        </div>
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Save" class="btn btn-primary" />
-                </div>
-            </div>
+                    </form>
 
-        </form>
+                    <form method="post" asp-controller="Connection" asp-action="Remove">
+                        <input type="submit" value="Delete" class="btn btn-secondary" />
+                    </form>
 
-        <form method="post" asp-controller="Connection" asp-action="Remove">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Delete" class="btn btn-secondary" />
-            </div>
-        </form>
+                </div><!-- card body -->
+            </div><!-- card -->
+        </div><!-- col -->
+        <div class="col">
 
-        <h3>How to check Vector's details</h3>
+            <h3>How to check Vector's details</h3>
 
-        <ul>
-            <li>Place Vector on the charger and double-click his backpack button.</li>
-            <li>Find your robot name on the screen shown (eg. Vector-A1B2).</li>
-            <li>Then, raise and lower his arms to see more details.</li>
-            <li>Your robot's serial number is listed as ESN. It's 8 digits of letters and numbers (eg. 009012AB).</li>
-            <li>Your robot's IP address is also listed there as IP. It's 4 numbers separated by periods (eg. 192.168.42.12).</li>
-            <li>If you see XX.XX.XX.XX on his face, reconnect Vector to your WiFi using the Companion App.</li>
-            <li>For email and password, make sure to use the same account that was used to set up your Vector on the companion app.</li>
-        </ul>
+            <ul>
+                <li>Place Vector on the charger and double-click his backpack button.</li>
+                <li>Find your robot name on the screen shown (eg. Vector-A1B2).</li>
+                <li>Then, raise and lower his arms to see more details.</li>
+                <li>Your robot's serial number is listed as ESN. It's 8 digits of letters and numbers (eg. 009012AB).</li>
+                <li>Your robot's IP address is also listed there as IP. It's 4 numbers separated by periods (eg. 192.168.42.12).</li>
+                <li>If you see XX.XX.XX.XX on his face, reconnect Vector to your WiFi using the Companion App.</li>
+                <li>For email and password, make sure to use the same account that was used to set up your Vector on the companion app.</li>
+            </ul>
 
-        <p>
-            <b>NB. VectorPlus should be running on the same wifi network as your Vector, which should be a 2.4GHz network.</b>
-            (Hopefully you breezed through this particular pain point when you first set up Vector and his app.)
-        </p>
+            <p>
+                <b>NB. VectorPlus should be running on the same wifi network as your Vector, which should be a 2.4GHz network.</b>
+                (Hopefully you breezed through this particular pain point when you first set up Vector and his app.)
+            </p>
 
-
-    </div>
+        </div><!-- col -->
+    </div><!-- row -->
+</div>
