@@ -1,12 +1,25 @@
 # VectorPlus
 
-A C# library, framework and server for defining and managing new behaviours for the Vector robot (created by Anki, now supported by Digital Dream Labs), through the (unofficial) C# SDK.
+A C# library, framework and server for defining and managing new behaviours for the Vector robot (created by Anki, now supported by Digital Dream Labs).
+
+VectorPlus communicates with your robot using the unofficial C# library [Anki.Vector.SDK](https://codaris.github.io/Anki.Vector.SDK/). It is designed to run continuously and maintain a connection to your Vector robot over your home wifi network.
 
 ## Context
 
 The SDK allows programs to access and control the Vector robot. Some capabilities require that the SDK take full control of the robot. While that is happening, the robot is locked.
 
 __VectorPlus__ creates behaviours that only take control of the robot as they need it, and release that control afterwards.
+
+## Current state
+
+The project is still in early stages. You can launch it using VisualStudio and connect to your robot. I recommend trying out the demo behaviours to get a feel for some of the things it can do.
+
+In planning:
+
+* A docker image that you can launch on any server.
+* Some better state tracking facilities.
+* Some more interesting demo behaviours.
+* Some documentation for writing your own behaviour modules.
 
 ## Running your VectorPlus server
 
@@ -18,7 +31,7 @@ To run VectorPlus as a server on a dedicated machine, you can configure the conn
 
 Once configured, head over to the configuration page, and upload a module. `VectorPlus.Demo.Behaviour.dll` is a good one to try. From there you can activate a number of different behaviours to try out with Vector.
 
-![Demo behaviours](Screenshots/2020-05-15_behaviours.png)
+![Demo behaviours](Screenshots/2020-05-19_behaviours.png)
 
 ## VectorPlusLib
 
@@ -43,4 +56,18 @@ VectorPlus will only take full control of the robot to execute individual Action
 
 ### Implementing your own behaviours
 
-_TODO: document this_
+**TODO:** Document developing your own `Behaviour`, `Action`, `IVectorPlusBehaviourModule`
+
+## Credit
+
+Huge credit to [Digital Dream Labs](https://www.digitaldreamlabs.com/) for picking up where Anki left off, maintaining and supporting both Cosmo and Vector robots. If you haven't already purchased a subscription to updates, you can do so at their site.
+
+* This project was created and maintained by [Lewis Westbury](https://twitter.com/instantiator).
+* The unofficial C# [Anki.Vector.SDK](https://codaris.github.io/Anki.Vector.SDK/), created and maintained by [Wayne Venables](https://github.com/codaris).
+* This project was inspired by [VectorCloud](https://github.com/rmountjoy92/VectorCloud) and [VectorCloud2](https://github.com/rmountjoy92/VectorCloud2) python servers created by [rmountjoy92](https://github.com/rmountjoy92).
+* See also: The official [Python Vector SDK](https://developer.anki.com/vector/docs/index.html).
+
+### Other useful tools
+
+* Vector Explorer: https://www.weekendrobot.com/vectorexplorer
+* VectorConfigure: https://www.weekendrobot.com/devtools
