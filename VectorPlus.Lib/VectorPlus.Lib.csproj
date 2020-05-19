@@ -6,5 +6,29 @@
 
   <ItemGroup>
     <PackageReference Include="Anki.Vector.SDK" Version="0.6.7" />
+    <PackageReference Include="Microsoft.ML" Version="1.4.0" />
+    <PackageReference Include="Microsoft.ML.ImageAnalytics" Version="1.4.0" />
+    <PackageReference Include="Microsoft.ML.OnnxTransformer" Version="1.4.0" />
+    <PackageReference Include="runtime.osx.10.10-x64.CoreCompat.System.Drawing" Version="5.8.64" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="TessData\eng\desired_characters">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Model\TinyYolo2_model.onnx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="assets\Model\TinyYolo2_model.onnx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ML\" />
+    <Folder Include="assets\" />
+    <Folder Include="assets\Model\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="ML\ImageNetStructures\" />
+    <Folder Include="ML\YoloParsing\" />
+    <Folder Include="ML\Onnx\" />
   </ItemGroup>
 </Project>

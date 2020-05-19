@@ -10,6 +10,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Audio\gun16.wav" />
+    <None Remove="TessData\eng\eng.word.bigrams" />
+    <None Remove="TessData\eng\eng.training_text.bigram_freqs" />
+    <None Remove="TessData\eng\eng.numbers" />
+    <None Remove="TessData\eng\eng.unicharambigs" />
+    <None Remove="TessData\eng\eng.punc" />
+    <None Remove="TessData\eng\eng.wordlist" />
+    <None Remove="TessData\eng\desired_characters" />
+    <None Remove="TessData\eng\eng.training_text.unigram_freqs" />
+    <None Remove="TessData\eng\eng.training_text" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Audio\gun16.wav" />

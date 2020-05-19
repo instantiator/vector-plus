@@ -28,34 +28,34 @@ namespace VectorPlus.Demo.Behaviour.Behaviours
         {
         }
 
-        protected override async Task RegisterWithRobotEventsAsync(EventComponent events)
+        protected override async Task RegisterWithRobotEventsAsync(Robot robot)
         {
-            events.FeatureStatus += Events_FeatureStatusAsync;
-            events.ChangedObservedFaceId += Events_ChangedObservedFaceIdAsync;
-            events.StimulationInfo += Events_StimulationInfoAsync;
-            events.AttentionTransfer += Events_AttentionTransferAsync;
-            events.ObservedFace += Events_ObservedFace;
-            events.ObservedObject += Events_ObservedObject;
-            events.RobotEvent += Events_RobotEvent;
-            events.RobotState += Events_RobotState;
-            events.UserIntent += Events_UserIntent;
-            events.WakeWordBegin += Events_WakeWordBegin;
-            events.WakeWordEnd += Events_WakeWordEnd;
+            robot.Events.FeatureStatus += Events_FeatureStatusAsync;
+            robot.Events.ChangedObservedFaceId += Events_ChangedObservedFaceIdAsync;
+            robot.Events.StimulationInfo += Events_StimulationInfoAsync;
+            robot.Events.AttentionTransfer += Events_AttentionTransferAsync;
+            robot.Events.ObservedFace += Events_ObservedFace;
+            robot.Events.ObservedObject += Events_ObservedObject;
+            robot.Events.RobotEvent += Events_RobotEvent;
+            robot.Events.RobotState += Events_RobotState;
+            robot.Events.UserIntent += Events_UserIntent;
+            robot.Events.WakeWordBegin += Events_WakeWordBegin;
+            robot.Events.WakeWordEnd += Events_WakeWordEnd;
         }
 
-        protected override async Task UnregisterFromRobotEventsAsync(EventComponent events)
+        protected override async Task UnregisterFromRobotEventsAsync(Robot robot)
         {
-            events.FeatureStatus -= Events_FeatureStatusAsync;
-            events.ChangedObservedFaceId -= Events_ChangedObservedFaceIdAsync;
-            events.StimulationInfo -= Events_StimulationInfoAsync;
-            events.AttentionTransfer -= Events_AttentionTransferAsync;
-            events.ObservedFace -= Events_ObservedFace;
-            events.ObservedObject -= Events_ObservedObject;
-            events.RobotEvent -= Events_RobotEvent;
-            events.RobotState -= Events_RobotState;
-            events.UserIntent -= Events_UserIntent;
-            events.WakeWordBegin -= Events_WakeWordBegin;
-            events.WakeWordEnd -= Events_WakeWordEnd;
+            robot.Events.FeatureStatus -= Events_FeatureStatusAsync;
+            robot.Events.ChangedObservedFaceId -= Events_ChangedObservedFaceIdAsync;
+            robot.Events.StimulationInfo -= Events_StimulationInfoAsync;
+            robot.Events.AttentionTransfer -= Events_AttentionTransferAsync;
+            robot.Events.ObservedFace -= Events_ObservedFace;
+            robot.Events.ObservedObject -= Events_ObservedObject;
+            robot.Events.RobotEvent -= Events_RobotEvent;
+            robot.Events.RobotState -= Events_RobotState;
+            robot.Events.UserIntent -= Events_UserIntent;
+            robot.Events.WakeWordBegin -= Events_WakeWordBegin;
+            robot.Events.WakeWordEnd -= Events_WakeWordEnd;
         }
 
         private async void Events_AttentionTransferAsync(object sender, AttentionTransferEventArgs e)

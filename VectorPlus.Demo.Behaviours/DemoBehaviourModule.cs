@@ -24,8 +24,9 @@ namespace VectorPlus.Demo.Behaviour
         public List<IVectorBehaviourPlus> Behaviours { get; } = new List<IVectorBehaviourPlus>()
         {
             new ExterminateCubeOnSightBehaviour(0),
-            new MonitoringEventsBehaviour(2, false),
-            new OfferTeaSometimesBehaviour(3)
+            new MonitoringEventsBehaviour(1, false),
+            new OfferTeaSometimesBehaviour(2),
+            new ChatterAboutObjectsBehaviour(3)
         };
     }
 }

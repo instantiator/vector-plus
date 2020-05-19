@@ -9,7 +9,6 @@ using Anki.Vector;
 using Anki.Vector.Exceptions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using VectorPlus.Demo.Behaviour.Behaviours;
 using VectorPlus.Lib;
 using VectorPlus.Web.Service.Db;
 using VectorPlus.Web.Service.Helpers;

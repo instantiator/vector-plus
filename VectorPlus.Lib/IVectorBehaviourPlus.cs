@@ -13,6 +13,7 @@ namespace VectorPlus.Lib
 
         bool NeedsPermanentRobotControl { get; }
         bool NeedsPermanentObjectAppearanceMonitoring { get; }
+        bool NeedsObjectDetection { get; }
 
         Task ReceiveKeypressAsync(char c);
 

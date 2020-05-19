@@ -28,12 +28,12 @@ namespace VectorPlus.Demo.Behaviour.Behaviours
             // NOP
         }
 
-        protected override async Task RegisterWithRobotEventsAsync(EventComponent events)
+        protected override async Task RegisterWithRobotEventsAsync(Robot robot)
         {
             controller.OnObjectAppeared += Controller_OnObjectAppeared;
         }
 
-        protected override async Task UnregisterFromRobotEventsAsync(EventComponent events)
+        protected override async Task UnregisterFromRobotEventsAsync(Robot robot)
         {
             controller.OnObjectAppeared -= Controller_OnObjectAppeared;
         }

@@ -13,12 +13,10 @@
     <Folder Include="Service\Db\" />
     <Folder Include="Service\Helpers\" />
     <Folder Include="Views\Connection\" />
+    <Folder Include="TessData\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VectorPlus.Lib\VectorPlus.Lib.csproj">
-      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
-    </ProjectReference>
-    <ProjectReference Include="..\VectorPlus.Demo.Behaviours\VectorPlus.Demo.Behaviour.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
   </ItemGroup>
@@ -28,5 +26,68 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="obj\Debug\netcoreapp3.1\VectorPlus.Web.Views.dll" />
+    <None Remove="TessData\eng\desired_characters" />
+    <None Remove="TessData\eng\eng.numbers" />
+    <None Remove="TessData\eng\eng.punc" />
+    <None Remove="TessData\eng\eng.training_text" />
+    <None Remove="TessData\eng\eng.training_text.bigram_freqs" />
+    <None Remove="TessData\eng\eng.training_text.unigram_freqs" />
+    <None Remove="TessData\eng\eng.unicharambigs" />
+    <None Remove="TessData\eng\eng.word.bigrams" />
+    <None Remove="TessData\eng\eng.wordlist" />
+    <None Remove="obj\Debug\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs" />
+    <None Remove="obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs" />
+    <None Remove="obj\Debug\netcoreapp3.1\Razor\Views\Connection\Index.cshtml.g.cs" />
+    <None Remove="obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs" />
+    <None Remove="obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs" />
+    <None Remove="obj\Debug\netcoreapp3.1\Razor\Views\_ViewImports.cshtml.g.cs" />
+    <None Remove="obj\Debug\netcoreapp3.1\Razor\Views\_ViewStart.cshtml.g.cs" />
+    <None Remove="obj\Debug\netcoreapp3.1\VectorPlus.Web.Views.dll" />
+    <None Remove="obj\Debug\netcoreapp3.1\Razor\Views\Connection\Index.cshtml.g.cs" />
+    <None Remove="obj\Debug\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs" />
+    <None Remove="obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs" />
+    <None Remove="obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs" />
+    <None Remove="obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs" />
+    <None Remove="obj\Debug\netcoreapp3.1\Razor\Views\_ViewImports.cshtml.g.cs" />
+    <None Remove="obj\Debug\netcoreapp3.1\Razor\Views\_ViewStart.cshtml.g.cs" />
+    <None Remove="bin\Debug\netcoreapp3.1\x64\liblept1753.so.dll" />
+    <None Remove="bin\Debug\netcoreapp3.1\x64\libtesseract3052.so.dll" />
+    <None Remove="bin\Debug\netcoreapp3.1\x86\liblept1753.so.dll" />
+    <None Remove="bin\Debug\netcoreapp3.1\x86\libtesseract3052.so.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="**/*" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TessData\eng\desired_characters">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TessData\eng\eng.numbers">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TessData\eng\eng.punc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TessData\eng\eng.training_text">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TessData\eng\eng.training_text.bigram_freqs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TessData\eng\eng.training_text.unigram_freqs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TessData\eng\eng.unicharambigs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TessData\eng\eng.word.bigrams">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TessData\eng\eng.wordlist">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>

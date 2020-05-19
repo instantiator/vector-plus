@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Anki.Vector;
 using Anki.Vector.Events;
+using Anki.Vector.Types;
+using VectorPlus.Lib.ML;
 using static VectorPlus.Lib.IVectorActionPlus;
 using static VectorPlus.Lib.IVectorControllerPlus;
 
@@ -19,15 +22,24 @@ namespace VectorPlus.Lib
         private bool actionExecutorRunning;
         private bool mainLoopRunning;
 
-        private readonly TimeSpan objectGoneThreshold = TimeSpan.FromSeconds(5);
-
+        // tasks
         private Task task_connection;
         private Task task_actions;
 
+        // lists
         public List<IVectorBehaviourPlus> Behaviours { get; private set; }
         public Queue<IVectorActionPlus> Actions { get; private set; }
         public List<VectorBehaviourPlusReport> Reports { get; private set; }
-        Dictionary<int, ObjectSeenState> objectSeenStates;
+
+        // object monitoring
+        private readonly TimeSpan objectGoneThreshold = TimeSpan.FromSeconds(5);
+        private Dictionary<int, ObjectSeenState> objectSeenStates;
+
+        // camera frame processing
+        private CameraFrameProcessor frameProcessor;
+        private ImageEncoding recentEncoding;
+        private byte[] recentImage;
+
 
         public string LastConnectionError { get; private set; }
         public Exception LastConnectionException { get; private set; }
@@ -39,6 +51,7 @@ namespace VectorPlus.Lib
         public event Func<VectorBehaviourPlusReport, Task> OnBehaviourReport;
         public event Func<ObjectSeenState, Task> OnObjectAppeared;
         public event Func<ObjectSeenState, Task> OnObjectDisappeared;
+        public event Func<CameraFrameProcessingResult, Task> OnCameraFrameProcessingResult;
 
         public VectorControllerPlus()
         {
@@ -91,10 +104,28 @@ namespace VectorPlus.Lib
                     examineConsole = false;
                 }
 
+                if (AnyBehavioursNeedCameraProcessing)
+                {
+                    ProcessCameraFrame();
+                }
+
                 if (AnyBehavioursNeedPermanentObjectMonitoring)
                 {
                     UpdateObjectMonitoring();
                 }
+            }
+        }
+
+        private void ProcessCameraFrame()
+        {
+            if (recentImage != null && frameProcessor != null)
+            {
+                // NB. Because the dimensions of bounding boxes correspond to
+                // the model input of 416 x 416, remember to scale the bounding
+                // box for overlaying on images if doing that!
+
+                var result = frameProcessor.Process(recentImage);
+                OnCameraFrameProcessingResult?.Invoke(result);
             }
         }
 
@@ -234,7 +265,32 @@ namespace VectorPlus.Lib
             {
                 Robot.Events.ObservedObject -= Events_ObservedObject;
             }
+
+            if (AnyBehavioursNeedCameraProcessing)
+            {
+                frameProcessor = frameProcessor ?? new CameraFrameProcessor();
+                Robot.Camera.ImageReceived += Camera_ImageReceived;
+                if (!Robot.Camera.IsFeedActive)
+                {
+                    await Robot.Camera.StartFeed();
+                }
+            }
+            else
+            {
+                Robot.Camera.ImageReceived -= Camera_ImageReceived;
+                if (Robot.Camera.IsFeedActive)
+                {
+                    await Robot.Camera.StopFeed();
+                }
+            }
         }
+
+        private void Camera_ImageReceived(object sender, Anki.Vector.Events.ImageReceivedEventArgs e)
+        {
+            recentEncoding = e.ImageEncoding;
+            recentImage = e.ImageData;
+        }
+
 
         private void Events_ObservedObject(object sender, RobotObservedObjectEventArgs e)
         {
@@ -293,6 +349,14 @@ namespace VectorPlus.Lib
             foreach (var behaviour in behaviours)
             {
                 await behaviour.SetControllerAsync(this);
+            }
+        }
+
+        private bool AnyBehavioursNeedCameraProcessing
+        {
+            get
+            {
+                return Behaviours.Any(b => b.NeedsObjectDetection);
             }
         }
 

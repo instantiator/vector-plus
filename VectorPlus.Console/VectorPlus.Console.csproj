@@ -12,4 +12,47 @@
     <ProjectReference Include="..\VectorPlus.Demo.Behaviours\VectorPlus.Demo.Behaviour.csproj" />
     <ProjectReference Include="..\VectorPlus.Lib\VectorPlus.Lib.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="TessData\eng\desired_characters" />
+    <None Remove="TessData\eng\eng.numbers" />
+    <None Remove="TessData\eng\eng.punc" />
+    <None Remove="TessData\eng\eng.training_text" />
+    <None Remove="TessData\eng\eng.training_text.bigram_freqs" />
+    <None Remove="TessData\eng\eng.training_text.unigram_freqs" />
+    <None Remove="TessData\eng\eng.unicharambigs" />
+    <None Remove="TessData\eng\eng.word.bigrams" />
+    <None Remove="TessData\eng\eng.wordlist" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TessData\eng\desired_characters">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TessData\eng\eng.numbers">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TessData\eng\eng.punc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TessData\eng\eng.training_text">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TessData\eng\eng.training_text.bigram_freqs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TessData\eng\eng.training_text.unigram_freqs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TessData\eng\eng.unicharambigs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TessData\eng\eng.word.bigrams">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TessData\eng\eng.wordlist">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="TessData\" />
+  </ItemGroup>
 </Project>

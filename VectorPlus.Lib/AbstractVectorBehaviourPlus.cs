@@ -20,7 +20,7 @@ namespace VectorPlus.Lib
         protected bool usesMirrorMode;
         protected bool usesMotionDetection;
 
-        protected bool mainLoopActive;
+        protected bool mainLoopActive; // use this in the main loop to stop appropriately
         protected Task mainLoopTask;
         protected CancellationTokenSource cancelMainLoop;
 
@@ -29,12 +29,13 @@ namespace VectorPlus.Lib
 
         protected AbstractVectorBehaviourPlus(
             int id,
-            bool needsPermanentControl,
-            bool needsPermanentObjectAppearanceMonitoring,
+            bool needsPermanentControl = false,
+            bool needsPermanentObjectAppearanceMonitoring = false,
             bool usesMotionDetection = false,
             bool usesFaces = false,
             bool usesCustomObjects = false,
-            bool usesMirrorMode = false)
+            bool usesMirrorMode = false,
+            bool needsObjectDetection = false)
         {
             this.Id = Guid.NewGuid();
             this.UniqueReference = GetType().FullName + ":" + id;
@@ -44,6 +45,7 @@ namespace VectorPlus.Lib
             this.usesFaceDetection = usesFaces;
             this.usesMirrorMode = usesMirrorMode;
             this.usesMotionDetection = usesMotionDetection;
+            this.NeedsObjectDetection = needsObjectDetection;
         }
 
         public abstract string Name { get; }
@@ -53,7 +55,9 @@ namespace VectorPlus.Lib
 
         public bool NeedsPermanentRobotControl { get; private set; }
 
-        protected void SetRefectoryPeriod(TimeSpan span) { this.refectoryPeriod = span; }
+        public bool NeedsObjectDetection { get; private set; }
+
+        protected void SetRefectoryPeriod(TimeSpan span) { refectoryPeriod = span; }
 
         protected void RecordTrigger(string key = null) { lastTriggers[key ?? "default"] = DateTime.Now; }
 
@@ -61,7 +65,7 @@ namespace VectorPlus.Lib
         {
             return
                 !lastTriggers.ContainsKey(key ?? "default") ||
-                DateTime.Now - lastTriggers[key] > refectoryPeriod;
+                DateTime.Now - lastTriggers[key ?? "default"] > refectoryPeriod;
         }
 
         public async Task SetControllerAsync(IVectorControllerPlus controller)
@@ -102,7 +106,7 @@ namespace VectorPlus.Lib
             if (usesFaceDetection) { await robot.Vision.EnableFaceDetection(); }
             if (usesMirrorMode) { await robot.Vision.EnableMirrorMode(); }
             if (usesMotionDetection) { await robot.Vision.EnableMotionDetection(); }
-            await RegisterWithRobotEventsAsync(controller.Robot.Events);
+            await RegisterWithRobotEventsAsync(controller.Robot);
             await IssueCommandsOnConnectionAsync();
             StartMainLoop();
         }
@@ -110,7 +114,7 @@ namespace VectorPlus.Lib
         protected async Task ActionsOnRobotDisconnectedAsync()
         {
             StopMainLoop();
-            if (controller != null) { await UnregisterFromRobotEventsAsync(controller.Robot.Events); }
+            if (controller != null) { await UnregisterFromRobotEventsAsync(controller.Robot); }
         }
 
         public void StartMainLoop()
@@ -146,8 +150,8 @@ namespace VectorPlus.Lib
 
         public abstract Task ReceiveKeypressAsync(char c);
 
-        protected abstract Task UnregisterFromRobotEventsAsync(EventComponent events);
-        protected abstract Task RegisterWithRobotEventsAsync(EventComponent events);
+        protected abstract Task UnregisterFromRobotEventsAsync(Robot robot);
+        protected abstract Task RegisterWithRobotEventsAsync(Robot robot);
         protected abstract Task IssueCommandsOnConnectionAsync();
         protected abstract Task MainLoopAsync();
 

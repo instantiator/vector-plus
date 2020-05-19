@@ -27,9 +27,9 @@ namespace VectorPlus.Demo.Behaviour.Behaviours
         {
         }
 
-        protected override async Task RegisterWithRobotEventsAsync(EventComponent events)
+        protected override async Task RegisterWithRobotEventsAsync(Robot robot)
         {
-            events.ChangedObservedFaceId += Events_ChangedObservedFaceId;
+            robot.Events.ChangedObservedFaceId += Events_ChangedObservedFaceId;
         }
 
         private void Events_ChangedObservedFaceId(object sender, Anki.Vector.Events.RobotChangedObservedFaceIdEventArgs e)
@@ -49,9 +49,9 @@ namespace VectorPlus.Demo.Behaviour.Behaviours
             }
         }
 
-        protected override async Task UnregisterFromRobotEventsAsync(EventComponent events)
+        protected override async Task UnregisterFromRobotEventsAsync(Robot robot)
         {
-            events.ChangedObservedFaceId -= Events_ChangedObservedFaceId;
+            robot.Events.ChangedObservedFaceId -= Events_ChangedObservedFaceId;
         }
 
         public override async Task ReceiveKeypressAsync(char c)

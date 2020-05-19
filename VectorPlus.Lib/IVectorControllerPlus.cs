@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Anki.Vector;
+using VectorPlus.Lib.ML;
 
 namespace VectorPlus.Lib
 {
@@ -16,9 +17,9 @@ namespace VectorPlus.Lib
         event Func<List<IVectorBehaviourPlus>, BehaviourEvent, Task> OnBehaviourEvent;
         event Func<VectorBehaviourPlusReport, Task> OnBehaviourReport;
         event Func<IVectorActionPlus, ActionEvent, Task> OnActionEvent;
-
         event Func<ObjectSeenState, Task> OnObjectAppeared;
         event Func<ObjectSeenState, Task> OnObjectDisappeared;
+        event Func<CameraFrameProcessingResult, Task> OnCameraFrameProcessingResult;
 
         Robot Robot { get; }
         ConnectedState Connection { get; }
