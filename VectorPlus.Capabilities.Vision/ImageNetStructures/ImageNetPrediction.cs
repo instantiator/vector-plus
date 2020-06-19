@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.ML.Data;
 
-namespace VectorPlus.Lib.ML.ImageNetStructures
+namespace VectorPlus.Capabilities.Vision.ImageNetStructures
 {
     public class ImageNetPrediction
     {

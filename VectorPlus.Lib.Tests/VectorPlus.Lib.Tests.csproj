@@ -15,12 +15,4 @@
   <ItemGroup>
     <ProjectReference Include="..\VectorPlus.Lib\VectorPlus.Lib.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="assets\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="assets\001-cat.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
 </Project>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Anki.Vector;
@@ -11,7 +12,9 @@ namespace VectorPlus.Demo.Behaviour.Behaviours
     {
         public override string Name => "Offer tea";
 
-        public override string Description => "Vector will offer you a cup of tea.";
+        public override string Description => "Vector will offer you a cup of tea every once in a while.";
+
+        public override ICollection<Type> RequestedFrameProcessors => null;
 
         public OfferTeaSometimesBehaviour(int id) : base(id, false, true, false, false, false, false)
         {

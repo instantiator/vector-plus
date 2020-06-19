@@ -1,5 +1,5 @@
 ﻿using System;
-namespace VectorPlus.Lib.ML.YoloParsing
+namespace VectorPlus.Lib.Vision
 {
     public class DimensionsBase
     {

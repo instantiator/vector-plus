@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Anki.Vector;
+using VectorPlus.Capabilities.Vision.Yolo;
 using VectorPlus.Demo.Behaviour.Actions;
 using VectorPlus.Lib;
-using VectorPlus.Lib.ML;
-using VectorPlus.Lib.ML.YoloParsing;
+using VectorPlus.Lib.Vision;
 
 namespace VectorPlus.Demo.Behaviour.Behaviours
 {
@@ -15,13 +16,16 @@ namespace VectorPlus.Demo.Behaviour.Behaviours
 
         public override string Name => "Observational chatter";
 
-        public override string Description => "Vector will chatter about the things he sees.";
+        public override string Description => "Vector recognises 20 different objects from the YOLO model, and will chatter about them when he sees them.";
 
-        public ChatterAboutObjectsBehaviour(int id) : base(id, needsObjectDetection: true)
+        public ChatterAboutObjectsBehaviour(int id) : base(id)
         {
             SetRefectoryPeriod(TimeSpan.FromSeconds(20));
             timeoutOnSpeech = TimeSpan.FromSeconds(3);
         }
+
+        private Type[] frameProcessorTypes = new[] { typeof(YoloCameraFrameProcessor) };
+        public override ICollection<Type> RequestedFrameProcessors => frameProcessorTypes;
 
         protected override async Task IssueCommandsOnConnectionAsync()
         {

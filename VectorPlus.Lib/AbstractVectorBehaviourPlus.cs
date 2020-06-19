@@ -34,8 +34,7 @@ namespace VectorPlus.Lib
             bool usesMotionDetection = false,
             bool usesFaces = false,
             bool usesCustomObjects = false,
-            bool usesMirrorMode = false,
-            bool needsObjectDetection = false)
+            bool usesMirrorMode = false)
         {
             this.Id = Guid.NewGuid();
             this.UniqueReference = GetType().FullName + ":" + id;
@@ -45,7 +44,6 @@ namespace VectorPlus.Lib
             this.usesFaceDetection = usesFaces;
             this.usesMirrorMode = usesMirrorMode;
             this.usesMotionDetection = usesMotionDetection;
-            this.NeedsObjectDetection = needsObjectDetection;
         }
 
         public abstract string Name { get; }
@@ -55,7 +53,9 @@ namespace VectorPlus.Lib
 
         public bool NeedsPermanentRobotControl { get; private set; }
 
-        public bool NeedsObjectDetection { get; private set; }
+        public abstract ICollection<Type> RequestedFrameProcessors { get; }
+
+        public bool NeedsFrameProcessing { get { return RequestedFrameProcessors != null && RequestedFrameProcessors.Count > 0; } }
 
         protected void SetRefectoryPeriod(TimeSpan span) { refectoryPeriod = span; }
 

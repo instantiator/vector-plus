@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Anki.Vector;
 using Anki.Vector.Events;
 using VectorPlus.Lib;
@@ -10,6 +12,8 @@ namespace VectorPlus.Demo.Behaviour.Behaviours
         public override string Name => "Monitor events";
 
         public override string Description => "A number of Vector's events will be logged.";
+
+        public override ICollection<Type> RequestedFrameProcessors => null;
 
         public MonitoringEventsBehaviour(int id, bool takeControl) : base(
             id: id,

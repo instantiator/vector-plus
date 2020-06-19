@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="ImageNetStructures\" />
+    <Folder Include="Yolo\" />
+    <Folder Include="Onnx\" />
+    <Folder Include="assets\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VectorPlus.Lib\VectorPlus.Lib.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="assets\Model\TinyYolo2_model.onnx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

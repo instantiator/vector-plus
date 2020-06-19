@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using VectorPlus.Lib.ML.Onnx;
-using VectorPlus.Lib.ML.YoloParsing;
+using VectorPlus.Capabilities.Vision.Yolo;
+using VectorPlus.Lib.Vision;
 
-namespace VectorPlus.Lib.ML
+namespace VectorPlus.Capabilities.Vision.Onnx
 {
-    public class CameraFrameProcessor
+    public abstract class AbstractOnnxCameraFrameProcessor : ICameraFrameProcessor
     {
-        private OnnxModelScorer modelScorer;
+        private  AbstractOnnxModelScorer scorer;
 
-        public CameraFrameProcessor()
+        protected AbstractOnnxCameraFrameProcessor()
         {
-            modelScorer = new OnnxModelScorer();
+            scorer = CreateModelScorer();
         }
+
+        protected abstract AbstractOnnxModelScorer CreateModelScorer();
 
         public CameraFrameProcessingResult Process(byte[] image)
         {
@@ -21,7 +23,7 @@ namespace VectorPlus.Lib.ML
             {
                 // This is a list of float arrays, one per image.
                 // We are set up to only process 1 image at a time.
-                IEnumerable<float[]> probabilities = modelScorer.ScoreYolo(new[] { image });
+                IEnumerable<float[]> probabilities = scorer.Score(new[] { image });
 
                 // This is the minimum confidence we consider returning for any bounding box.
                 var thresholdConfidence = 0.5f;

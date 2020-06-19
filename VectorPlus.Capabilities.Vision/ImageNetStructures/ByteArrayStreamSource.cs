@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Microsoft.ML.Data;
 
-namespace VectorPlus.Lib.ML.ImageNetStructures
+namespace VectorPlus.Capabilities.Vision.ImageNetStructures
 {
     public class ByteArrayStreamSource : IMultiStreamSource
     {

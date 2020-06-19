@@ -2,15 +2,12 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using VectorPlus.Lib.Vision;
 
-namespace VectorPlus.Lib.ML.YoloParsing
+namespace VectorPlus.Capabilities.Vision.Yolo
 {
     class CellDimensions : DimensionsBase { }
 
-    /// <summary>
-    /// Heavily derived from the ML.NET tutorial classes at:
-    /// https://docs.microsoft.com/en-us/dotnet/machine-learning/tutorials/object-detection-onnx
-    /// </summary>
     public class YoloOutputParser
     {
         #region Constants
@@ -66,9 +63,9 @@ namespace VectorPlus.Lib.ML.YoloParsing
 
         #endregion
 
-        public IList<YoloBoundingBox> ParseOutputs(float[] yoloModelOutputs, float threshold = .3F)
+        public IList<IdentifiedObjectBoundingBox> ParseOutputs(float[] yoloModelOutputs, float threshold = .3F)
         {
-            var boxes = new List<YoloBoundingBox>();
+            var boxes = new List<IdentifiedObjectBoundingBox>();
             for (int row = 0; row < ROW_COUNT; row++)
             {
                 for (int column = 0; column < COL_COUNT; column++)
@@ -86,7 +83,7 @@ namespace VectorPlus.Lib.ML.YoloParsing
                         var topScore = topResultScore * confidence;
                         if (topScore < threshold)
                             continue;
-                        boxes.Add(new YoloBoundingBox()
+                        boxes.Add(new IdentifiedObjectBoundingBox()
                         {
                             Dimensions = new BoundingBoxDimensions
                             {
@@ -105,7 +102,7 @@ namespace VectorPlus.Lib.ML.YoloParsing
             return boxes;
         }
 
-        public IList<YoloBoundingBox> FilterBoundingBoxes(IList<YoloBoundingBox> boxes, int limit, float threshold)
+        public IList<IdentifiedObjectBoundingBox> FilterBoundingBoxes(IList<IdentifiedObjectBoundingBox> boxes, int limit, float threshold)
         {
             var activeCount = boxes.Count;
             var isActiveBoxes = new bool[boxes.Count];
@@ -117,7 +114,7 @@ namespace VectorPlus.Lib.ML.YoloParsing
                     .OrderByDescending(b => b.Box.Confidence)
                     .ToList();
 
-            var results = new List<YoloBoundingBox>();
+            var results = new List<IdentifiedObjectBoundingBox>();
 
             for (int i = 0; i < boxes.Count; i++)
             {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Anki.Vector;
 using Anki.Vector.Objects;
@@ -12,6 +13,8 @@ namespace VectorPlus.Demo.Behaviour.Behaviours
         public override string Name => "Exterminate cube on sight";
 
         public override string Description => "Vector exterminates the cube every once in a while when he sees it.";
+
+        public override ICollection<Type> RequestedFrameProcessors => null;
 
         public ExterminateCubeOnSightBehaviour(int id) : base(id, false, true, false, false, false, false)
         {

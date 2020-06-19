@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Anki.Vector;
-using VectorPlus.Lib.ML;
+using VectorPlus.Lib.Vision;
 
 namespace VectorPlus.Lib
 {
@@ -28,6 +28,7 @@ namespace VectorPlus.Lib
         List<IVectorBehaviourPlus> Behaviours { get; }
         Queue<IVectorActionPlus> Actions { get; }
         List<VectorBehaviourPlusReport> Reports { get; }
+        List<ICameraFrameProcessor> FrameProcessors { get; }
 
         Task<bool> ConnectAsync(VectorControllerPlusConfig controllerConfig, RobotConfiguration robotConfig = null);
         Task DisconnectAsync();
@@ -44,5 +45,6 @@ namespace VectorPlus.Lib
         IEnumerable<VectorBehaviourPlusReport> BehaviourReports { get; }
 
         Task StartMainLoopAsync(CancellationToken cancellationToken, char? haltOn = ' ');
+        bool MainLoopRunning { get; }
     }
 }

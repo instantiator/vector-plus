@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Drawing;
 
-namespace VectorPlus.Lib.ML.YoloParsing
+namespace VectorPlus.Lib.Vision
 {
     public class BoundingBoxDimensions : DimensionsBase { }
 
-    public class YoloBoundingBox
+    public class IdentifiedObjectBoundingBox
     {
         public BoundingBoxDimensions Dimensions { get; set; }
 

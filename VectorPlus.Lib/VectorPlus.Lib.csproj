@@ -18,17 +18,9 @@
     <None Update="Model\TinyYolo2_model.onnx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="assets\Model\TinyYolo2_model.onnx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ML\" />
-    <Folder Include="assets\" />
-    <Folder Include="assets\Model\" />
+    <Folder Include="Vision\" />
     <Folder Include="Helpers\" />
-    <Folder Include="ML\ImageNetStructures\" />
-    <Folder Include="ML\YoloParsing\" />
-    <Folder Include="ML\Onnx\" />
   </ItemGroup>
 </Project>

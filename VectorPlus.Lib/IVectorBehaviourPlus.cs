@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using VectorPlus.Lib.Vision;
 
 namespace VectorPlus.Lib
 {
@@ -13,7 +15,9 @@ namespace VectorPlus.Lib
 
         bool NeedsPermanentRobotControl { get; }
         bool NeedsPermanentObjectAppearanceMonitoring { get; }
-        bool NeedsObjectDetection { get; }
+
+        ICollection<Type> RequestedFrameProcessors { get; }
+        bool NeedsFrameProcessing { get; }
 
         Task ReceiveKeypressAsync(char c);
 

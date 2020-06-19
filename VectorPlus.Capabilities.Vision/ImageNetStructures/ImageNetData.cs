@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Microsoft.ML;
 using Microsoft.ML.Data;
 
-namespace VectorPlus.Lib.ML.ImageNetStructures
+namespace VectorPlus.Capabilities.Vision.ImageNetStructures
 {
     public class ImageNetData
     {
@@ -15,6 +13,11 @@ namespace VectorPlus.Lib.ML.ImageNetStructures
         [LoadColumn(1)]
         public string Label; // used to identify images
 
+        /// <summary>
+        /// This is absolutely horrible, but the ONNX pipelines seem to rely on
+        /// file paths. We write the images to temporary files. It is important
+        /// to erase them after use.
+        /// </summary>
         public static IEnumerable<ImageNetData> FromImages(IEnumerable<byte[]> images)
         {
             int img = 0;
@@ -25,6 +28,9 @@ namespace VectorPlus.Lib.ML.ImageNetStructures
             });
         }
 
+        /// <summary>
+        /// Erases the temporary files for each ImageNetData file provided.
+        /// </summary>
         public static void EraseFiles(IEnumerable<ImageNetData> data)
         {
             foreach(var path in data.Select(i => i.ImagePath))
