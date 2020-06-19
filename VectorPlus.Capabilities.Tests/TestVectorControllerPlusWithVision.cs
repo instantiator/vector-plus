@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using VectorPlus.Capabilities.Vision.Yolo;
+using VectorPlus.Lib;
 
-namespace VectorPlus.Lib.Tests
+namespace VectorPlus.Capabilities.Tests
 {
-    public class TestVectorControllerPlus
+    public class TestVectorControllerPlusWithVision
     {
         VectorControllerPlus controller;
         Task controllerMainLoop;
@@ -26,11 +29,17 @@ namespace VectorPlus.Lib.Tests
         }
 
         [Test]
-        public void TestControllerStartsUp()
+        public void TestFrameProcessorsNotNull()
         {
-            Assert.True(controller.MainLoopRunning);
+            Assert.NotNull(controller.FrameProcessors);
         }
 
-        
+        [Test]
+        public void TestControllerAcceptsYoloCameraFrameProcessor()
+        {
+            // TODO: add a YoloCameraFrameProcessor
+            // TODO: mock it though, so you can prove it gets called
+            Assert.True(controller.FrameProcessors.Any(p => p is YoloCameraFrameProcessor));
+        }
     }
 }

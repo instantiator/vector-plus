@@ -5,7 +5,7 @@ using VectorPlus.Capabilities.Vision.Yolo;
 
 namespace VectorPlus.Capabilities.Tests
 {
-    public class TestYoloModelScorer
+    public class TestYoloImplementation
     {
         private YoloModelScorer scorer;
 
