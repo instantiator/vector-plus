@@ -31,7 +31,8 @@ namespace VectorPlus.Capabilities.Vision.Onnx
         {
             if (!string.IsNullOrWhiteSpace(ModelResourceId))
             {
-                return PathHelper.CopyResourceToFile(ModelResourceId);
+                var assembly = GetType().Assembly;
+                return PathHelper.CopyResourceToFile(assembly, ModelResourceId);
             }
             else
             {

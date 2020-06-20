@@ -5,9 +5,9 @@ namespace VectorPlus.Lib.Helpers
 {
     public class PathHelper
     {
-        public static string CopyResourceToFile(string resource)
+        public static string CopyResourceToFile(Assembly assembly, string resource)
         {
-            var readStream = Assembly.GetCallingAssembly().GetManifestResourceStream(resource);
+            var readStream = assembly.GetManifestResourceStream(resource);
             var path = Path.GetTempFileName();
             var writeStream = File.Create(path);
             readStream.Seek(0, SeekOrigin.Begin);

@@ -13,7 +13,9 @@ namespace VectorPlus.Capabilities.Tests
         [SetUp]
         public void Setup()
         {
-            var modelPath = PathHelper.CopyResourceToFile("VectorPlus.Capabilities.Vision.assets.Model.TinyYolo2_model.onnx");
+            //Assembly.GetCallingAssembly()
+            var assembly = typeof(YoloCameraFrameProcessor).Assembly;
+            var modelPath = PathHelper.CopyResourceToFile(assembly, "VectorPlus.Capabilities.Vision.assets.Model.TinyYolo2_model.onnx");
             scorer = scorer ?? new YoloModelScorer(modelPath);
         }
 
