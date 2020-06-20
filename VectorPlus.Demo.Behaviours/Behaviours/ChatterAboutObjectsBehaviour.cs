@@ -20,7 +20,7 @@ namespace VectorPlus.Demo.Behaviour.Behaviours
 
         public ChatterAboutObjectsBehaviour(int id) : base(id)
         {
-            SetRefectoryPeriod(TimeSpan.FromSeconds(20));
+            SetRefectoryPeriod(TimeSpan.FromSeconds(60));
             timeoutOnSpeech = TimeSpan.FromSeconds(3);
         }
 
