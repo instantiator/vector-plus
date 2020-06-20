@@ -18,6 +18,9 @@
     <ProjectReference Include="..\VectorPlus.Lib\VectorPlus.Lib.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
+    <ProjectReference Include="..\VectorPlus.Capabilities.Vision\VectorPlus.Capabilities.Vision.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.3" />

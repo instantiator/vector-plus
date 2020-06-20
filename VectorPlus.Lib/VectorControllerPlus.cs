@@ -141,6 +141,12 @@ namespace VectorPlus.Lib
 
         public void StopMainLoop() { mainLoopRunning = false; }
 
+        /// <summary>
+        /// Attempts to connect to the Robot.
+        /// </summary>
+        /// <param name="controllerConfig"></param>
+        /// <param name="robotConfig"></param>
+        /// <returns>True if the connection initially succeeded.</returns>
         public async Task<bool> ConnectAsync(VectorControllerPlusConfig controllerConfig, RobotConfiguration robotConfig = null)
         {
             this.controllerConfig = controllerConfig;
