@@ -9,11 +9,9 @@ namespace VectorPlus.Capabilities.Vision.Yolo
 {
     public class YoloModelScorer : AbstractOnnxModelScorer
     {
-        public YoloModelScorer() : base()
+        public YoloModelScorer(string modelPath) : base(modelPath)
         {
         }
-
-        protected override string ModelPath => Path.Combine(PathHelper.GetAbsolutePath("assets"), "Model", "TinyYolo2_model.onnx");
 
         protected override string ModelInputColumn => "image";
 

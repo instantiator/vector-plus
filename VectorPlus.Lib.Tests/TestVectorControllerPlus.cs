@@ -29,8 +29,17 @@ namespace VectorPlus.Lib.Tests
         public void TestControllerStartsUp()
         {
             Assert.True(controller.MainLoopRunning);
+            Thread.Sleep(500);
+            Assert.True(controller.MainLoopRunning);
         }
 
-        
+        [Test]
+        public async Task TestControllerCanConnectToRobotAsync()
+        {
+            var config = new VectorControllerPlusConfig() { ReconnectDelay_ms = 2000 };
+            var connected = await controller.ConnectAsync(config);
+            Assert.True(connected);
+        }
+
     }
 }

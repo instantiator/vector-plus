@@ -14,8 +14,9 @@
     <ProjectReference Include="..\VectorPlus.Lib\VectorPlus.Lib.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="assets\Model\TinyYolo2_model.onnx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Remove="assets\Model\TinyYolo2_model.onnx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="assets\Model\TinyYolo2_model.onnx" />
   </ItemGroup>
 </Project>

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -142,7 +141,7 @@ namespace VectorPlus.Lib
 
         public void StopMainLoop() { mainLoopRunning = false; }
 
-        public async Task<bool> ConnectAsync(VectorControllerPlusConfig controllerConfig, RobotConfiguration robotConfig)
+        public async Task<bool> ConnectAsync(VectorControllerPlusConfig controllerConfig, RobotConfiguration robotConfig = null)
         {
             this.controllerConfig = controllerConfig;
             this.robotConfig = robotConfig;
@@ -229,6 +228,7 @@ namespace VectorPlus.Lib
         public async ValueTask DisposeAsync()
         {
             await DisconnectAsync();
+            Behaviours.ToList().ForEach(async b => await RemoveBehaviourAsync(b.UniqueReference));
         }
 
         public async Task AddBehaviourAsync(IVectorBehaviourPlus behaviour)
@@ -236,6 +236,7 @@ namespace VectorPlus.Lib
             if (!Behaviours.Any(b => b.UniqueReference == behaviour.UniqueReference))
             {
                 Behaviours.Add(behaviour);
+                UpdateFrameProcessors();
 
                 if (Connection == ConnectedState.Connected)
                 {
@@ -322,9 +323,10 @@ namespace VectorPlus.Lib
             var requiredTypes = Behaviours.SelectMany(b => b.RequestedFrameProcessors).Distinct();
             var presentTypes = FrameProcessors.Select(p => p.GetType()).Distinct();
 
-            var toRemove = presentTypes.Where(t => !requiredTypes.Contains(t));
+            var toRemove = presentTypes.Where(t => !requiredTypes.Contains(t)).ToList();
             var toAdd = requiredTypes.Where(t => !presentTypes.Contains(t));
-
+            
+            FrameProcessors.Where(p => toRemove.Contains(p.GetType())).ToList().ForEach(p => p.Dispose());
             FrameProcessors.RemoveAll(p => toRemove.Contains(p.GetType()));
             FrameProcessors.AddRange(toAdd.Select(t => (ICameraFrameProcessor)Activator.CreateInstance(t)));
         }
@@ -350,6 +352,7 @@ namespace VectorPlus.Lib
         {
             var found = Behaviours.Where(b => b.UniqueReference == reference);
             Behaviours.RemoveAll(b => b.UniqueReference == reference);
+            UpdateFrameProcessors();
             if (Connection == ConnectedState.Connected)
             {
                 await ActOnAnyBehaviourPermanentRequirements();

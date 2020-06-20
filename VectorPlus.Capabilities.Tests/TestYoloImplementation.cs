@@ -2,6 +2,7 @@ using System.IO;
 using System.Linq;
 using NUnit.Framework;
 using VectorPlus.Capabilities.Vision.Yolo;
+using VectorPlus.Lib.Helpers;
 
 namespace VectorPlus.Capabilities.Tests
 {
@@ -12,7 +13,8 @@ namespace VectorPlus.Capabilities.Tests
         [SetUp]
         public void Setup()
         {
-            scorer = scorer ?? new YoloModelScorer();
+            var modelPath = PathHelper.CopyResourceToFile("VectorPlus.Capabilities.Vision.assets.Model.TinyYolo2_model.onnx");
+            scorer = scorer ?? new YoloModelScorer(modelPath);
         }
 
         [Test]

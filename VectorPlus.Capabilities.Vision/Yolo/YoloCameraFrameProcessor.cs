@@ -9,9 +9,8 @@ namespace VectorPlus.Capabilities.Vision.Yolo
         {
         }
 
-        protected override AbstractOnnxModelScorer CreateModelScorer()
-        {
-            return new YoloModelScorer();
-        }
+        protected override string ModelResourceId => "VectorPlus.Capabilities.Vision.assets.Model.TinyYolo2_model.onnx";
+
+        protected override AbstractOnnxModelScorer CreateModelScorer(string path) => new YoloModelScorer(path);
     }
 }
