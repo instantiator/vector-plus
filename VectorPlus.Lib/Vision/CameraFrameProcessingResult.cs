@@ -5,7 +5,13 @@ namespace VectorPlus.Lib.Vision
     public class CameraFrameProcessingResult
     {
         /// <summary>
+        /// The processor that generated this result.
+        /// </summary>
+        public ICameraFrameProcessor Processor { get; set; }
+
+        /// <summary>
         /// The original image as a byte array.
+        /// Vector's camera images are: 640x360
         /// </summary>
         public byte[] Image { get; set; }
 

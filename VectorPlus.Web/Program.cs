@@ -21,6 +21,7 @@ namespace VectorPlus.Web
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<VectorPlusWebStartup>();
+                    webBuilder.UseUrls("http://*:5000"); // port 8080 on every interface
                 })
                 .ConfigureServices((hostContext, services) =>
                 {

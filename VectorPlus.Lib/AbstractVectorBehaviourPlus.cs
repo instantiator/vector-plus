@@ -47,6 +47,7 @@ namespace VectorPlus.Lib
         }
 
         public abstract string Name { get; }
+
         public abstract string Description { get; }
 
         public bool NeedsPermanentObjectAppearanceMonitoring { get; private set; }

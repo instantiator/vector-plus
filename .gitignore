@@ -405,3 +405,6 @@ ASALocalRun/
 
 # Local History for Visual Studio
 .localhistory/
+
+# Docker build artefact
+out/

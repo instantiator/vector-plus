@@ -12,51 +12,50 @@ __VectorPlus__ creates behaviours that only take control of the robot as they ne
 
 ## Current state
 
-The project is still in early stages. You can launch it using VisualStudio and connect to your robot. I recommend trying out the demo behaviours to get a feel for some of the things it can do.
+The project is still in early stages. You can launch it using VisualStudio and connect to your robot, or run it in a Docker container on any machine.
 
 In planning:
 
-* A docker image that you can launch on any server.
 * Some better state tracking facilities.
 * Some more interesting demo behaviours.
 * Some documentation for writing your own behaviour modules.
+* Distribute `VectorPlus.Lib` as a Nuget package for developers to build against.
 
 ## Running your VectorPlus server
 
-This library is in the early stages of development. Download the solution, and run the __VectorPlus.Web__ application with Visual Studio. It's a web server, so visit: http://localhost:5003 to test on your local machine.
+VectorPlus is under development - some of these details may change...
 
-By default, the application will pick up your Vector SDK configuration. 
+### Launching with Visual Studio
 
-To run VectorPlus as a server on a dedicated machine, you can configure the connection it through the web UI.
+Download the solution, and run the __VectorPlus.Web__ application with Visual Studio. It's a web server, so you can visit: http://localhost:5000 to test it on your own machine.
 
-Once configured, head over to the configuration page, and upload a module. `VectorPlus.Demo.Behaviour.dll` is a good one to try. From there you can activate a number of different behaviours to try out with Vector.
+### Launching through Docker
+
+There are a number of scripts to help you get started running the app in a Docker container:
+
+* `docker-build.sh` - this builds a docker image tagged `vectorplusapp` using `VectorPlus.Web/Dockerfile`.
+* `docker-run.sh` - this starts a docker container named `vectorplus`, running the app published on port 5000. 
+* `docker-stop.sh` - this stops and removes the `vectorplus` docker container.
+
+### Connecting to the robot
+
+By default, the application will pick up your Vector SDK configuration. If you're running on a personal machine where you've already set up the SDK, you don't need to do anything.
+
+If you're running VectorPlus as a server on a separate machine (or inside Docker), you can configure the robot's SDK connection through the __Connection__ page.
+
+### Enabling behaviours
+
+Head over to the __Configuration__ page, and upload a module. `VectorPlus.Demo.Behaviour.dll` is the same module which you can build as a part of this Visual Studio solution. From there you can activate a number of different behaviours to try out with Vector.
 
 ![Demo behaviours](Screenshots/2020-05-19_behaviours.png)
 
-## VectorPlusLib
+## Developing new behaviours
 
-### Concepts
+VectorPlus is intended to make it easy to build new behaviours that can co-exist. They can be bundled up and distributed as modules in DLL form for others to install.
 
-When a Behaviour wishes to issue commands to the robot, it can place Actions in a queue to be run when the robot is free. This helps to distinguish between background Behaviour activity (ie. waiting for an event, such as an object being observed) and foreground Actions (such as moving the robot).
+* See: [Developer Notes](DeveloperNotes.md)
 
-Unfortunately, there's a slight naming clash between Behaviours as defined by VectorPlus and Behaviours (reasonably complex pre-programmed actions that you can ask Vector to do through the SDK). To distinguish, the VectorPlus framework names key classes with a 'Plus' suffix.
-
-VectorPlus will only take full control of the robot to execute individual Actions, or if a Behaviour is added that explicitly requires full control.
-
-* __The VectorControllerPlus__ is responsible for managing a reasonably stable connection to Vector, until it is Disposed.
-  * (Remember to DisposeAsync it once you have finished with it.)
-  * It also manages full control of the robot - releasing Vector whenever it isn't needed.
-* __A VectorBehaviourPlus__ can be added to the VectorControllerPlus. Once added, there are 3 ways for it to interact with Vector:
-  * It can register itself with any Vector events it is using as triggers.
-  * It enqueues some initial ActionPlus when it first connects.
-  * Its main loop is started which can also enqueue actions.
-* __A VectorActionPlus__ is the smallest unit of instruction passed to Vector.
-  * It can contain any number of instructions for the robot.
-  * If required (likely) it asks the VectorControllerPlus to take full control for it.
-
-### Implementing your own behaviours
-
-**TODO:** Document developing your own `Behaviour`, `Action`, `IVectorPlusBehaviourModule`
+__TODO: bundle VectorPlus.Lib as a Nuget package.__
 
 ## Credit
 

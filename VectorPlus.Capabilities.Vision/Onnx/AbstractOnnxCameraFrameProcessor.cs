@@ -74,6 +74,7 @@ namespace VectorPlus.Capabilities.Vision.Onnx
 
                 return new CameraFrameProcessingResult()
                 {
+                    Processor = this,               // the processor that generated this result.
                     Image = image,                  // the original image for reference.
                     Boxes = boundingBoxSets.First() // bounding boxes for the first (only) image.
                 };
