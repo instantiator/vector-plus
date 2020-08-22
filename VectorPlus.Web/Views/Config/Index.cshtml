@@ -52,15 +52,14 @@
                 <div class="card-footer">
                     <form enctype="multipart/form-data" method="post" asp-controller="Config" asp-action="UploadModule">
                         <div class="custom-file">
-                            <input type="file" name="files" accept=".dll" class="custom-file-input" id="filesInput" />
-                            <label class="custom-file-label" for="filesInput">Choose a plugin DLL</label>
+                            <input type="file" name="files" accept=".zip" class="custom-file-input" id="filesInput" />
+                            <label class="custom-file-label" for="filesInput">Choose a plugin ZIP</label>
                         </div>
                         <p>
                             <input type="submit" value="Upload" class="btn btn-primary" style="margin-top: 10px;" />
                         </p>
                     </form>
                 </div><!-- card-body -->
-
             </div><!-- card -->
 
         </div><!-- col -->
@@ -92,5 +91,12 @@
 
         </div><!-- col -->
     </div><!-- row -->
+
+    <div class="row">
+        Known issues:
+        <ul>
+            <li>Once you've selected a zip file, the UI won't show you what you've selected. Just press upload.</li>
+        </ul>
+    </div>
 
 </div>

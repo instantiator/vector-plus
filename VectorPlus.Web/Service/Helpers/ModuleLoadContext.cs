@@ -1,24 +1,40 @@
 ﻿using System;
+using System.IO;
 using System.Reflection;
 using System.Runtime.Loader;
 
 namespace VectorPlus.Web.Service.Helpers
 {
+    [Obsolete]
     public class ModuleLoadContext : AssemblyLoadContext
     {
-        private AssemblyDependencyResolver _resolver;
+        private AssemblyDependencyResolver pluginAssemblyResolver;
+        private AssemblyDependencyResolver applicationAssemblyResolver;
 
         public ModuleLoadContext(string pluginPath)
         {
-            _resolver = new AssemblyDependencyResolver(pluginPath);
+            pluginAssemblyResolver = new AssemblyDependencyResolver(pluginPath);
+
+            string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+            UriBuilder uri = new UriBuilder(codeBase);
+            string path = Uri.UnescapeDataString(uri.Path);
+            var applicationPath = Path.GetDirectoryName(path);
+
+            applicationAssemblyResolver = new AssemblyDependencyResolver(applicationPath);
         }
 
         protected override Assembly Load(AssemblyName assemblyName)
         {
-            string assemblyPath = _resolver.ResolveAssemblyToPath(assemblyName);
-            if (assemblyPath != null)
+            string applicationAssemblyPath = applicationAssemblyResolver.ResolveAssemblyToPath(assemblyName);
+            if (applicationAssemblyPath != null)
             {
-                return LoadFromAssemblyPath(assemblyPath);
+                return LoadFromAssemblyPath(applicationAssemblyPath);
+            }
+
+            string pluginAssemblyPath = pluginAssemblyResolver.ResolveAssemblyToPath(assemblyName);
+            if (pluginAssemblyPath != null)
+            {
+                return LoadFromAssemblyPath(pluginAssemblyPath);
             }
 
             return null;
@@ -26,10 +42,16 @@ namespace VectorPlus.Web.Service.Helpers
 
         protected override IntPtr LoadUnmanagedDll(string unmanagedDllName)
         {
-            string libraryPath = _resolver.ResolveUnmanagedDllToPath(unmanagedDllName);
-            if (libraryPath != null)
+            string applicationLibraryPath = applicationAssemblyResolver.ResolveUnmanagedDllToPath(unmanagedDllName);
+            if (applicationLibraryPath != null)
             {
-                return LoadUnmanagedDllFromPath(libraryPath);
+                return LoadUnmanagedDllFromPath(applicationLibraryPath);
+            }
+
+            string pluginLibraryPath = pluginAssemblyResolver.ResolveUnmanagedDllToPath(unmanagedDllName);
+            if (pluginLibraryPath != null)
+            {
+                return LoadUnmanagedDllFromPath(pluginLibraryPath);
             }
 
             return IntPtr.Zero;

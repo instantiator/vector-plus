@@ -31,9 +31,6 @@ namespace VectorPlus.Web.Migrations
                     b.Property<string>("AuthorEmail")
                         .HasColumnType("TEXT");
 
-                    b.Property<byte[]>("DLL")
-                        .HasColumnType("BLOB");
-
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
@@ -51,6 +48,9 @@ namespace VectorPlus.Web.Migrations
 
                     b.Property<bool>("UserEnabled")
                         .HasColumnType("INTEGER");
+
+                    b.Property<byte[]>("Zip")
+                        .HasColumnType("BLOB");
 
                     b.HasKey("ModuleConfigId");
 

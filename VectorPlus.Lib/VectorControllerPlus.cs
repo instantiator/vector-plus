@@ -326,7 +326,11 @@ namespace VectorPlus.Lib
 
         private void UpdateFrameProcessors()
         {
-            var requiredTypes = Behaviours.SelectMany(b => b.RequestedFrameProcessors).Distinct();
+            var requiredTypes = new List<Type>();
+            var fb = Behaviours.Count();
+            var requestedTypes = Behaviours.Where(b => b.RequestedFrameProcessors != null).SelectMany(b => b.RequestedFrameProcessors);
+            if (requestedTypes != null) { requiredTypes.AddRange(requestedTypes.Distinct()); }
+
             var presentTypes = FrameProcessors.Select(p => p.GetType()).Distinct();
 
             var toRemove = presentTypes.Where(t => !requiredTypes.Contains(t)).ToList();

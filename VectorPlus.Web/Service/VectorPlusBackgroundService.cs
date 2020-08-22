@@ -25,7 +25,9 @@ namespace VectorPlus.Web.Service
         public VectorPlusBackgroundService(ILogger<VectorPlusBackgroundService> logger)
         {
             this.logger = logger;
-            AllModules = new List<IVectorPlusBehaviourModule>(ModuleHelper.ExtractModules());
+            // AllModules = new List<IVectorPlusBehaviourModule>(ModuleHelper.ExtractModules());
+            AllModules = new List<IVectorPlusBehaviourModule>(PluginHelper.ExtractModulesFromAllPlugins());
+
         }
 
         public IVectorControllerPlus Controller { get; private set; }
@@ -156,27 +158,35 @@ namespace VectorPlus.Web.Service
             }
         }
 
-        public ActionResponseMessage AddModuleDLL(byte[] dll)
+        public ActionResponseMessage AddModule(byte[] zip)
         {
-            logger?.LogDebug("Adding new modules from DLL.");
-            var modules = ModuleHelper.ExtractModules(dll, logger);
-            if (modules != null)
+            try
             {
-                AllModules.AddRange(modules);
-                logger?.LogDebug("Modules added: " + string.Join(", ", modules.Select(m => m.Name)));
-
-                using (var db = new VectorPlusBackgroundServiceDbContext())
+                logger?.LogDebug("Adding new module DLLs from Zip.");
+                var modules = PluginHelper.ExtractModulesFromZipData(zip, logger);
+                if (modules != null)
                 {
-                    db.Modules.AddRange(modules.Select(m => ModuleConfig.From(m, dll, true)));
-                    db.SaveChanges();
-                }
+                    AllModules.AddRange(modules);
+                    logger?.LogDebug("Modules added: " + string.Join(", ", modules.Select(m => m.Name)));
 
-                return ActionResponseMessage.Success("Modules added: " + string.Join(", ", modules.Select(m => m.Name)));
+                    using (var db = new VectorPlusBackgroundServiceDbContext())
+                    {
+                        db.Modules.AddRange(modules.Select(m => ModuleConfig.From(m, zip, true)));
+                        db.SaveChanges();
+                    }
+
+                    return ActionResponseMessage.Success("Modules added: " + string.Join(", ", modules.Select(m => m.Name)));
+                }
+                else
+                {
+                    logger?.LogWarning("Modules failed to load.");
+                    return ActionResponseMessage.Failure("Modules failed to load. Did you provide a zip file?");
+                }
             }
-            else
+            catch (Exception e)
             {
-                logger?.LogWarning("Module failed to load.");
-                return ActionResponseMessage.Failure("Modules failed to load.");
+                logger?.LogWarning("Modules failed to load.");
+                return ActionResponseMessage.Failure(e, "Modules failed to load. Did you provide a zip file?");
             }
         }
 

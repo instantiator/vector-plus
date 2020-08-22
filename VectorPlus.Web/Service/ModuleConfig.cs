@@ -8,7 +8,8 @@ namespace VectorPlus.Web.Service
         public Guid ModuleConfigId { get; set; }
         public string UniqueReference { get; set; }
         public DateTime Added { get; set; }
-        public byte[] DLL { get; set; }
+
+        public byte[] Zip { get; set; }
 
         public int Release { get; set; }
         public string Name { get; set; }
@@ -20,14 +21,14 @@ namespace VectorPlus.Web.Service
         public string AuthorEmail { get; set; }
         public string ModuleWebsite { get; set; }
 
-        public static ModuleConfig From(IVectorPlusBehaviourModule module, byte[] dll, bool enabled)
+        public static ModuleConfig From(IVectorPlusBehaviourModule module, byte[] zip, bool enabled)
         {
             return new ModuleConfig()
             {
                 UniqueReference = module.UniqueReference,
                 ModuleConfigId = Guid.NewGuid(),
                 Added = DateTime.Now,
-                DLL = dll,
+                Zip = zip,
                 Release = module.Release,
                 Name = module.Name,
                 Description = module.Description,

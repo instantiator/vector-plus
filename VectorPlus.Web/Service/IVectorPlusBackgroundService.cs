@@ -16,7 +16,7 @@ namespace VectorPlus.Web.Service
         Task<ActionResponseMessage> ReconnectAsync();
         Task<ActionResponseMessage> DisconnectAsync();
 
-        ActionResponseMessage AddModuleDLL(byte[] bytes);
+        ActionResponseMessage AddModule(byte[] zip);
         ActionResponseMessage RemoveModule(string reference);
         Task<ActionResponseMessage> ActivateBehaviourAsync(string reference);
         Task<ActionResponseMessage> DeactivateBehaviourAsync(string reference);

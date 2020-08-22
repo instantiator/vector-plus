@@ -57,7 +57,6 @@ namespace VectorPlus.Demo.Behaviour.Behaviours
                     var label = sortedBoxes.First().Label;
                     var confidence = sortedBoxes.First().Confidence;
 
-
                     var msg = "I'm not sure, but I thought I saw ";
                     switch (confidence)
                     {

@@ -1,5 +1,7 @@
 ﻿# VectorPlus Developer Notes
 
+See also: [Contributing to VectorPlus](Contributing.md)
+
 ## Dependencies
 
 * Visual Studio or a .NET Core installation (to build, run and test)
@@ -73,7 +75,7 @@ To create a fresh instance of the database, or to modify the existing database, 
 
 Either modify `VectorPlusBackgroundServiceDbContext`, add new classes, or change the classes that currently map to database tables: `ModuleConfig`, `RobotConfig`
 
-Once ready, create a migration using the Package Manager Console:
+Once ready, create a migration using the Package Manager Console with the `VectorPlus.Web` project selected:
 
 * `Add-Migration GiveYourMigrationANameHere -Context VectorPlus.Web.Service.Db.VectorPlusBackgroundServiceDbContext`
 
@@ -85,25 +87,25 @@ To run the migration changes to the database, run the following in the Package M
 
 #### OS X
 
-Visual Studio for Mac needs a little extra help, as the Nuget Package Manager Console doesn't seem to be easily available. First install this [Nuget Package Manager Console](https://github.com/mrward/monodevelop-nuget-extensions) extension.
+Visual Studio for Mac needs a little extra help, as the Nuget Package Manager Console doesn't seem to be easily available. First, install this [Nuget Package Manager Console](https://github.com/mrward/monodevelop-nuget-extensions) extension.
 
 ## Building Behaviours
 
 Behaviours are designed to run in the background, waiting for triggers or events before they cause the robot to take action.
 
-Behaviours should inherit from `AbstractVectorBehaviourPlus`, and implement `IVectorBehaviourPlus`.
+Behaviours must implement `IVectorBehaviourPlus`, and can inherit from `AbstractVectorBehaviourPlus` (recommended).
 
 To build a new Behaviour, inherit `AbstractVectorBehaviourPlus` and implement the abstract methods and properties. See the `IVectorBehaviourPlus` interface for details of the purpose of these methods and properties.
 
-There are plenty of examples illustrating the lifecycle of a Behaviour in the VectorPlus.Demo.Behaviours project.
+There are plenty of examples illustrating the lifecycle of a Behaviour in the `VectorPlus.Demo.Behaviours` project.
 
-When enabled, a Behaviour will be assigned to the running VectorPlus controller, using `SetControllerAsync`. For Behaviours that inherit from `AbstractVectorBehaviourPlus` the following then occurs:
+When enabled, a Behaviour will be assigned to the running `VectorPlusController`, using `SetControllerAsync`. For Behaviours that inherit from `AbstractVectorBehaviourPlus` the following then occurs:
 
 * The Behaviour has an opportunity to register with the Robot's events (implement `RegisterWithRobotEventsAsync`).
 * The Behaviour has an opportunity to issue commands to the Robot or Controller as soon as it connects (implement `IssueCommandsOnConnectionAsync`).
 * The Behaviour's main loop is called. This doesn't have to do anything, but the Behaviour needs a main loop, this runs on a separate thread (implement `MainLoopAsync`).
 
-When running, the Behaviour may interact with the Robot directly through `controller.Robot`, but it is normally expected to enqueue an `IVectorActionPlus` which can then be scheduled by the controller (which can then ensure that it has full control of the robot if required, and manage other shared resources such as Frame Processors or object tracking).
+When running, the Behaviour may interact with the Robot directly through `controller.Robot`, but it is normally expected to enqueue an `IVectorActionPlus` which can then be scheduled by the controller (able to ensure that it has full control of the robot if required, and manage other shared resources such as Frame Processors or object tracking).
 
 A normal (if simple) implementation might first register for an event (such as a seen face), and then when the delegate method provided to the event is called, to enqueue an action (such as some spoken words or a gesture).
 
@@ -112,6 +114,14 @@ On disable or disconnection from the robot, the following occurs:
 * The robot's main loop receives a Cancel on its CancelToken.
 * The Behaviour should unregister from any of the Robot's events that it was registered for (implement `UnregisterFromRobotEventsAsync`).
 
-## Building a BehaviourModule
+## Building a Plugin
 
-VectorPlus will scan provided Module DLLs for classes that implement `IVectorPlusBehaviourModule`. These will then each be loaded as a behavioural module - with any number of assigned Behaviours. Details in the module will be made visible to the user through the UI.
+VectorPlus will scan the DLLs, provided in a plugin zip file, for classes that implement `IVectorPlusBehaviourModule`. These will then each be loaded as a behavioural module - with any number of assigned Behaviours. Details in the module will be made visible to the user through the UI.
+
+* Build your plugin project against the latest versions of `VectorPlus.Lib` (and `VectorPlus.Capabilities.Vision`, if required).
+* Implement some `IVectorPlusBehaviour` and `IVectorPlusAction` classes.
+* Implement at least one `IVectorPlusBehaviourModule` that references the behaviours you have created.
+* Zip the bin/Debug directory (or bin/Release directory if this is a release version).
+* You won't need to include the `VectorPlus.Lib.*` and `VectorPlus.Capabilities.Vision.*` files, but it won't do any harm - other than to inflate your zip.
+* Test the new zip by launching the VectorPlus web app, and uploading the zip into it.
+* It will unzip the file and read through the DLLs inside - looking for non-abstract classes that implement `IVectorPlusBehaviourModule`.

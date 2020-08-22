@@ -49,8 +49,7 @@ namespace VectorPlus.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> UploadModuleAsync(List<IFormFile> files)
         {
-            // NB. Never trust the FileName property.
-
+            // NB. Never trust the FileName property - it's useless.
             ActionResponseMessage result = null;
             long size = files.Sum(f => f.Length);
             foreach (var formFile in files)
@@ -60,13 +59,18 @@ namespace VectorPlus.Web.Controllers
                     using (var stream = new MemoryStream())
                     {
                         await formFile.CopyToAsync(stream);
-                        var bytes = stream.ToArray();
-                        result = service.AddModuleDLL(bytes);
+                        var zipBytes = stream.ToArray();
+                        result = service.AddModule(zipBytes);
                     }
                     if (result.State == ActionResponseState.Failure)
                     {
+                        logger.LogWarning("Service unable to parse file: " + result.Message, result.Exception);
                         break;
                     }
+                }
+                else
+                {
+                    logger.LogWarning("FormFile of length 0 encountered.");
                 }
             }
             ViewData["Result"] = result ?? ActionResponseMessage.NOP;

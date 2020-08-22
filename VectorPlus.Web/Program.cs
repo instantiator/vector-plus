@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using TinyMessenger;
 using VectorPlus.Web.Service;
@@ -18,10 +19,16 @@ namespace VectorPlus.Web
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureLogging((HostBuilderContext context, ILoggingBuilder logfactory) =>
+                {
+                    // replace default loggers
+                    // logfactory.ClearProviders();
+                    // logfactory.AddConsole();
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<VectorPlusWebStartup>();
-                    webBuilder.UseUrls("http://*:5000"); // port 8080 on every interface
+                    webBuilder.UseUrls("http://*:5000"); // port 5000 on every interface
                 })
                 .ConfigureServices((hostContext, services) =>
                 {

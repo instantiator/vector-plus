@@ -8,6 +8,7 @@ using VectorPlus.Lib.Vision;
 namespace VectorPlus.Demo.Behaviour.Behaviours
 {
     // TODO: this is not yet implemented
+    [Obsolete("Not yet implemented")]
     public class LaserChasingBehaviour : AbstractVectorBehaviourPlus
     {
         public LaserChasingBehaviour(int id) : base(id, usesMirrorMode: true)
@@ -31,7 +32,14 @@ namespace VectorPlus.Demo.Behaviour.Behaviours
 
         private async Task Controller_OnCameraFrameProcessingResult(CameraFrameProcessingResult arg)
         {
-            // TODO: if it came from the spot detector, and Vector's head is in a good orientation, use that to initiate or inform a chase
+            // TODO: if the spot detector is confident there's a laser and has been for X seconds then:
+            // - move head if the spot is high, lower head if it's low
+            // - use angle of head to determine whether spot is far or near by height
+            // - if spot is left, turn left a little (and vice versa for right)
+
+            // TODO: if the spot seemed to be near, and then it disappeared, we might have caught it
+            // TODO: if the spot is nearby and not moving, initiate a pounce?
+
             // TODO: if the spot detector hasn't seen the spot for a while, abandon the chase
         }
 

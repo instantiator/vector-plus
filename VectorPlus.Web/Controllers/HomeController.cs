@@ -12,11 +12,8 @@ namespace VectorPlus.Web.Controllers
 {
     public class HomeController : AbstractVectorPlusController<HomeController>
     {
-        private readonly ILogger<HomeController> logger;
-
         public HomeController(ILogger<HomeController> logger, VectorPlusBackgroundService service) : base(logger, service)
         {
-            this.logger = logger;
         }
 
         public IActionResult Index()
