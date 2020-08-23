@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker run -it --entrypoint=/bin/bash vectorplusapp
+docker run -it --entrypoint=sh vectorplusapp
