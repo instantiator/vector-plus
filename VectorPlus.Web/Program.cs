@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using TinyMessenger;
 using VectorPlus.Web.Service;
+using VectorPlus.Web.Service.Db;
 
 namespace VectorPlus.Web
 {
@@ -32,6 +33,7 @@ namespace VectorPlus.Web
                 })
                 .ConfigureServices((hostContext, services) =>
                 {
+                    services.AddSingleton<VectorPlusBackgroundServiceDbContext>();
                     services.AddSingleton<VectorPlusBackgroundService>();
                     services.AddSingleton<IHostedService, VectorPlusBackgroundService>(serviceProvider => serviceProvider.GetService<VectorPlusBackgroundService>());
                 });

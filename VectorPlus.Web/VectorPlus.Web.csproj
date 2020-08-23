@@ -60,6 +60,8 @@
     <None Remove="obj\Release\netcoreapp3.1\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs" />
     <None Remove="obj\Release\netcoreapp3.1\Razor\Views\_ViewImports.cshtml.g.cs" />
     <None Remove="obj\Release\netcoreapp3.1\Razor\Views\_ViewStart.cshtml.g.cs" />
+    <None Remove="vectorplus.db" />
+    <None Remove="vectorplus.db" />
   </ItemGroup>
   <ItemGroup>
     <None Include="**/*" />

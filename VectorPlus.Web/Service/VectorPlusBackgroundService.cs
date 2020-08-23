@@ -19,15 +19,14 @@ namespace VectorPlus.Web.Service
     {
         private ILogger<VectorPlusBackgroundService> logger;
         private CancellationToken executionStoppingToken;
+        private VectorPlusBackgroundServiceDbContext db;
 
         private VectorControllerPlusConfig controllerConfig = new VectorControllerPlusConfig() { ReconnectDelay_ms = 2000 };
 
-        public VectorPlusBackgroundService(ILogger<VectorPlusBackgroundService> logger)
+        public VectorPlusBackgroundService(ILogger<VectorPlusBackgroundService> logger, VectorPlusBackgroundServiceDbContext db)
         {
             this.logger = logger;
-            // AllModules = new List<IVectorPlusBehaviourModule>(ModuleHelper.ExtractModules());
-            AllModules = new List<IVectorPlusBehaviourModule>(PluginHelper.ExtractModulesFromAllPlugins());
-
+            this.db = db;
         }
 
         public IVectorControllerPlus Controller { get; private set; }
@@ -36,7 +35,10 @@ namespace VectorPlus.Web.Service
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            this.executionStoppingToken = stoppingToken;
+            executionStoppingToken = stoppingToken;
+
+            await db.InitAsync();
+            AllModules = new List<IVectorPlusBehaviourModule>(PluginHelper.ExtractModulesFromAllPlugins());
 
             Controller = CreateController();
 
@@ -53,6 +55,9 @@ namespace VectorPlus.Web.Service
 
         public override async Task StopAsync(CancellationToken cancellationToken)
         {
+            await db.DisposeAsync();
+            db = null;
+
             await Controller.DisposeAsync();
             Controller = null;
         }

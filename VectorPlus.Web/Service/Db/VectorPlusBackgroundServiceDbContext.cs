@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using VectorPlus.Lib;
 
 namespace VectorPlus.Web.Service.Db
 {
@@ -10,7 +8,15 @@ namespace VectorPlus.Web.Service.Db
         public DbSet<ModuleConfig> Modules { get; set; }
         public DbSet<RoboConfig> RoboConfig { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder options) => options.UseSqlite("Data Source=vectorplus.db");
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        {
+            options.UseSqlite("Data Source=vectorplus.db");
+        }
+
+        public async Task InitAsync()
+        {
+            await Database.MigrateAsync();
+        }
     }
 
 }
