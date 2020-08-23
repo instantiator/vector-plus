@@ -80,11 +80,8 @@ namespace VectorPlus.Web.Service
 
         public async Task<ActionResponseMessage> EraseRoboConfigAsync()
         {
-            using (var db = new VectorPlusBackgroundServiceDbContext())
-            {
-                db.RoboConfig.RemoveRange(db.RoboConfig);
-                db.SaveChanges();
-            }
+            db.RoboConfig.RemoveRange(db.RoboConfig);
+            db.SaveChanges();
             return await ReconnectAsync();
         }
 
@@ -147,20 +144,14 @@ namespace VectorPlus.Web.Service
 
         public RoboConfig RetrieveRoboConfig()
         {
-            using (var db = new VectorPlusBackgroundServiceDbContext())
-            {
-                return db.RoboConfig.SingleOrDefault();
-            }
+            return db.RoboConfig.SingleOrDefault();
         }
 
         private void StoreRoboConfig(RoboConfig config)
         {
-            using (var db = new VectorPlusBackgroundServiceDbContext())
-            {
-                db.RoboConfig.RemoveRange(db.RoboConfig);
-                db.RoboConfig.Add(config);
-                db.SaveChanges();
-            }
+            db.RoboConfig.RemoveRange(db.RoboConfig);
+            db.RoboConfig.Add(config);
+            db.SaveChanges();
         }
 
         public ActionResponseMessage AddModule(byte[] zip)
@@ -174,11 +165,8 @@ namespace VectorPlus.Web.Service
                     AllModules.AddRange(modules);
                     logger?.LogDebug("Modules added: " + string.Join(", ", modules.Select(m => m.Name)));
 
-                    using (var db = new VectorPlusBackgroundServiceDbContext())
-                    {
-                        db.Modules.AddRange(modules.Select(m => ModuleConfig.From(m, zip, true)));
-                        db.SaveChanges();
-                    }
+                    db.Modules.AddRange(modules.Select(m => ModuleConfig.From(m, zip, true)));
+                    db.SaveChanges();
 
                     return ActionResponseMessage.Success("Modules added: " + string.Join(", ", modules.Select(m => m.Name)));
                 }
@@ -198,11 +186,8 @@ namespace VectorPlus.Web.Service
         public ActionResponseMessage RemoveModule(string reference)
         {
             AllModules.RemoveAll(m => m.UniqueReference == reference);
-            using (var db = new VectorPlusBackgroundServiceDbContext())
-            {
-                db.Modules.RemoveRange(db.Modules.Where(m => m.UniqueReference == reference));
-                db.SaveChanges();
-            }
+            db.Modules.RemoveRange(db.Modules.Where(m => m.UniqueReference == reference));
+            db.SaveChanges();
 
             return ActionResponseMessage.Success("Removed: " + reference);
         }
