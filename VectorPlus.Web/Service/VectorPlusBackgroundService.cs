@@ -150,6 +150,8 @@ namespace VectorPlus.Web.Service
         private void StoreRoboConfig(RoboConfig config)
         {
             db.RoboConfig.RemoveRange(db.RoboConfig);
+            db.SaveChanges();
+
             db.RoboConfig.Add(config);
             db.SaveChanges();
         }
