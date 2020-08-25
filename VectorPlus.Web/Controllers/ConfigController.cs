@@ -47,6 +47,8 @@ namespace VectorPlus.Web.Controllers
         }
 
         [HttpPost]
+        [RequestFormLimits(MultipartBodyLengthLimit = 209715200)]
+        [RequestSizeLimit(209715200)]
         public async Task<IActionResult> UploadModuleAsync(List<IFormFile> files)
         {
             // NB. Never trust the FileName property - it's useless.
