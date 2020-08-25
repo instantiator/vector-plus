@@ -58,6 +58,10 @@ namespace VectorPlus.Lib
 
         public bool NeedsFrameProcessing { get { return RequestedFrameProcessors != null && RequestedFrameProcessors.Count > 0; } }
 
+        public virtual IVectorActionPlus ActionOnAdded => null;
+
+        public virtual IVectorActionPlus ActionOnRemoved => null;
+
         protected void SetRefectoryPeriod(TimeSpan span) { refectoryPeriod = span; }
 
         protected void RecordTrigger(string key = null) { lastTriggers[key ?? "default"] = DateTime.Now; }

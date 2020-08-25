@@ -24,7 +24,7 @@ namespace VectorPlus.Web.Service
 
         private VectorControllerPlusConfig controllerConfig = new VectorControllerPlusConfig() {
             ReconnectDelay_ms = 2000,
-            ActionOnConnect = new ConnectedActionPlus()
+            ActionOnConnect = new ConnectedActionPlus(),
         };
 
         public VectorPlusBackgroundService(ILogger<VectorPlusBackgroundService> logger, VectorPlusBackgroundServiceDbContext db)

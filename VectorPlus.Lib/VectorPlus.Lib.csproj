@@ -19,5 +19,6 @@
   <ItemGroup>
     <Folder Include="Vision\" />
     <Folder Include="Helpers\" />
+    <Folder Include="Actions\" />
   </ItemGroup>
 </Project>

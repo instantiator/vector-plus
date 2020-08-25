@@ -6,6 +6,7 @@ using Anki.Vector;
 using VectorPlus.Capabilities.Vision.Yolo;
 using VectorPlus.Demo.Behaviour.Actions;
 using VectorPlus.Lib;
+using VectorPlus.Lib.Actions;
 using VectorPlus.Lib.Vision;
 
 namespace VectorPlus.Demo.Behaviour.Behaviours
@@ -26,6 +27,9 @@ namespace VectorPlus.Demo.Behaviour.Behaviours
 
         private Type[] frameProcessorTypes = new[] { typeof(YoloCameraFrameProcessor) };
         public override ICollection<Type> RequestedFrameProcessors => frameProcessorTypes;
+
+        public override IVectorActionPlus ActionOnAdded => new SimpleSpeechAction(this, "Ready to make some observations.");
+        public override IVectorActionPlus ActionOnRemoved => new SimpleSpeechAction(this, "When you see one object, you've seen them all.");
 
         protected override async Task IssueCommandsOnConnectionAsync()
         {
@@ -73,7 +77,7 @@ namespace VectorPlus.Demo.Behaviour.Behaviours
 
                     var description = YoloNamer.ParseLabel(label);
                     var speech = msg + (description ?? label);
-                    controller.EnqueueAction(new SimpleSpeechAction(this, timeoutOnSpeech, speech));
+                    controller.EnqueueAction(new SimpleSpeechAction(this, speech));
                 }
             }
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Anki.Vector;
 using VectorPlus.Lib;
+using VectorPlus.Lib.Actions;
 using VectorPlus.Lib.Vision;
 
 namespace VectorPlus.Demo.Behaviour.Behaviours
@@ -20,6 +21,9 @@ namespace VectorPlus.Demo.Behaviour.Behaviours
         public override string Description => "Vector loves a good chase! Throw down a laser spot and if he sees it, the game begins!";
 
         public override ICollection<Type> RequestedFrameProcessors => null; // this is the one
+
+        public override IVectorActionPlus ActionOnAdded => new SimpleSpeechAction(this, "I'm ready to catch that little red dot.");
+        public override IVectorActionPlus ActionOnRemoved => new SimpleSpeechAction(this, "Lets chase the dot another time.");
 
         protected override async Task IssueCommandsOnConnectionAsync() { }
 

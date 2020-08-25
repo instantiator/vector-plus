@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Anki.Vector;
 using Anki.Vector.Events;
 using VectorPlus.Lib;
+using VectorPlus.Lib.Actions;
 
 namespace VectorPlus.Demo.Behaviour.Behaviours
 {
@@ -23,6 +24,9 @@ namespace VectorPlus.Demo.Behaviour.Behaviours
             usesFaces: true)
         {
         }
+
+        public override IVectorActionPlus ActionOnAdded => new SimpleSpeechAction(this, "Monitoring started.");
+        public override IVectorActionPlus ActionOnRemoved => new SimpleSpeechAction(this, "Monitoring finished.");
 
         protected override async Task IssueCommandsOnConnectionAsync()
         {

@@ -74,5 +74,15 @@ namespace VectorPlus.Lib
         /// Halts the Behaviour's main loop.
         /// </summary>
         void StopMainLoop();
+
+        /// <summary>
+        /// An action to enqueue when the behaviour is added.
+        /// </summary>
+        IVectorActionPlus ActionOnAdded { get; }
+
+        /// <summary>
+        /// An action to enqueue when the behaviour is removed.
+        /// </summary>
+        IVectorActionPlus ActionOnRemoved { get; }
     }
 }

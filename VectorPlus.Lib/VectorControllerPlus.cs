@@ -255,6 +255,11 @@ namespace VectorPlus.Lib
                     await RegisterBehavioursAsync(new[] { behaviour });
                 }
 
+                if (behaviour.ActionOnAdded != null)
+                {
+                    EnqueueAction(behaviour.ActionOnAdded);
+                }
+
                 OnBehaviourEvent?.Invoke(Behaviours, BehaviourEvent.Add);
             }
         }
@@ -365,14 +370,22 @@ namespace VectorPlus.Lib
 
         public async Task RemoveBehaviourAsync(string reference)
         {
-            var found = Behaviours.Where(b => b.UniqueReference == reference);
+            var found = Behaviours.Where(b => b.UniqueReference == reference).ToList();
             Behaviours.RemoveAll(b => b.UniqueReference == reference);
             UpdateFrameProcessors();
             if (Connection == ConnectedState.Connected)
             {
+                foreach (var behaviour in found)
+                {
+                    if (behaviour.ActionOnRemoved != null)
+                    {
+                        EnqueueAction(behaviour.ActionOnRemoved);
+                    }
+                }
                 await ActOnAnyBehaviourPermanentRequirements();
                 await UnregisterBehavioursAsync(found);
             }
+
             OnBehaviourEvent?.Invoke(Behaviours, BehaviourEvent.Remove);
         }
 

@@ -5,6 +5,7 @@ using Anki.Vector;
 using Anki.Vector.Objects;
 using VectorPlus.Demo.Behaviour.Actions;
 using VectorPlus.Lib;
+using VectorPlus.Lib.Actions;
 
 namespace VectorPlus.Demo.Behaviour.Behaviours
 {
@@ -20,6 +21,9 @@ namespace VectorPlus.Demo.Behaviour.Behaviours
         {
             SetRefectoryPeriod(TimeSpan.FromMinutes(5));
         }
+
+        public override IVectorActionPlus ActionOnAdded => new SimpleSpeechAction(this, "Seek! Locate! Destroy!");
+        public override IVectorActionPlus ActionOnRemoved => new SimpleSpeechAction(this, "You would make a good Dalek.");
 
         protected override async Task IssueCommandsOnConnectionAsync()
         {

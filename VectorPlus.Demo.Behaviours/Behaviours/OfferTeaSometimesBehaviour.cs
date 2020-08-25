@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Anki.Vector;
 using VectorPlus.Demo.Behaviour.Actions;
 using VectorPlus.Lib;
+using VectorPlus.Lib.Actions;
 
 namespace VectorPlus.Demo.Behaviour.Behaviours
 {
@@ -20,6 +21,9 @@ namespace VectorPlus.Demo.Behaviour.Behaviours
         {
             SetRefectoryPeriod(TimeSpan.FromMinutes(5));
         }
+
+        public override IVectorActionPlus ActionOnAdded => new SimpleSpeechAction(this, "I'll pop the kettle on.");
+        public override IVectorActionPlus ActionOnRemoved => new SimpleSpeechAction(this, "Perhaps you'd like some tea another time.");
 
         protected override async Task IssueCommandsOnConnectionAsync()
         {

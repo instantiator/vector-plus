@@ -23,7 +23,7 @@ namespace VectorPlus.Console
 
             await using (IVectorControllerPlus controller = new VectorControllerPlus())
             {
-                controller.OnConnectionChanged += async (state) => System.Console.WriteLine("! Connection: " + state);
+                controller.OnConnectionChanged += async (previously, state) => System.Console.WriteLine("! Connection: " + state);
 
                 //await controller.AddBehaviourAsync(new MonitoringEventsBehaviour(false));
                 await controller.AddBehaviourAsync(new OfferTeaSometimesBehaviour(0));
