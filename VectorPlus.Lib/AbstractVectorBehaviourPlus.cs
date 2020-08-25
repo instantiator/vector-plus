@@ -77,7 +77,7 @@ namespace VectorPlus.Lib
             await HandleConnectionStateAsync();
         }
 
-        private async Task Controller_OnConnectionChanged(ConnectedState state) { await HandleConnectionStateAsync(); }
+        private async Task Controller_OnConnectionChanged(ConnectedState previously, ConnectedState state) { await HandleConnectionStateAsync(); }
 
         private async Task HandleConnectionStateAsync()
         {

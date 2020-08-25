@@ -13,7 +13,7 @@ namespace VectorPlus.Lib
         public enum ActionEvent {  Add, Start, Finish }
         public enum BehaviourEvent {  Add, Remove }
 
-        event Func<ConnectedState, Task> OnConnectionChanged;
+        event Func<ConnectedState, ConnectedState, Task> OnConnectionChanged;
         event Func<List<IVectorBehaviourPlus>, BehaviourEvent, Task> OnBehaviourEvent;
         event Func<VectorBehaviourPlusReport, Task> OnBehaviourReport;
         event Func<IVectorActionPlus, ActionEvent, Task> OnActionEvent;

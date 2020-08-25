@@ -43,7 +43,7 @@ namespace VectorPlus.Lib
         public Exception LastConnectionException { get; private set; }
 
         public event Action<char> OnKeyPress;
-        public event Func<ConnectedState, Task> OnConnectionChanged;
+        public event Func<ConnectedState, ConnectedState, Task> OnConnectionChanged;
         public event Func<IVectorActionPlus, ActionEvent, Task> OnActionEvent;
         public event Func<List<IVectorBehaviourPlus>, BehaviourEvent, Task> OnBehaviourEvent;
         public event Func<VectorBehaviourPlusReport, Task> OnBehaviourReport;
@@ -59,7 +59,7 @@ namespace VectorPlus.Lib
             this.Reports = new List<VectorBehaviourPlusReport>();
             this.objectSeenStates = new Dictionary<int, ObjectSeenState>();
             this.FrameProcessors = new List<ICameraFrameProcessor>();
-            OnConnectionChanged += async (state) => await RespondToConnectionAsync(state);
+            OnConnectionChanged += async (previously, state) => await RespondToConnectionAsync(previously, state);
         }
 
         public Robot Robot { get; private set; }
@@ -71,8 +71,9 @@ namespace VectorPlus.Lib
             get { return connection; }
             private set
             {
+                var previously = connection;
                 connection = value;
-                OnConnectionChanged?.Invoke(connection);
+                OnConnectionChanged?.Invoke(previously, value);
             }
         }
 
@@ -178,14 +179,18 @@ namespace VectorPlus.Lib
             }
         }
 
-        private async Task RespondToConnectionAsync(ConnectedState state)
+        private async Task RespondToConnectionAsync(ConnectedState previously, ConnectedState state)
         {
+            bool madeConnection = (state == ConnectedState.Connected && previously != ConnectedState.Connected);
             switch (state)
             {
                 case ConnectedState.Connected:
                     await UnregisterBehavioursAsync(Behaviours);
                     await RegisterBehavioursAsync(Behaviours);
                     await ActOnAnyBehaviourPermanentRequirements();
+                    if (madeConnection && controllerConfig.ActionOnConnect != null) {
+                        EnqueueAction(controllerConfig.ActionOnConnect);
+                    }
                     ResumeActionExecutor();
                     break;
                 case ConnectedState.Disconnected:

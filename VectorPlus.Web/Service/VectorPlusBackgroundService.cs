@@ -10,6 +10,7 @@ using Anki.Vector.Exceptions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using VectorPlus.Lib;
+using VectorPlus.Web.Service.Actions;
 using VectorPlus.Web.Service.Db;
 using VectorPlus.Web.Service.Helpers;
 
@@ -21,7 +22,10 @@ namespace VectorPlus.Web.Service
         private CancellationToken executionStoppingToken;
         private VectorPlusBackgroundServiceDbContext db;
 
-        private VectorControllerPlusConfig controllerConfig = new VectorControllerPlusConfig() { ReconnectDelay_ms = 2000 };
+        private VectorControllerPlusConfig controllerConfig = new VectorControllerPlusConfig() {
+            ReconnectDelay_ms = 2000,
+            ActionOnConnect = new ConnectedActionPlus()
+        };
 
         public VectorPlusBackgroundService(ILogger<VectorPlusBackgroundService> logger, VectorPlusBackgroundServiceDbContext db)
         {

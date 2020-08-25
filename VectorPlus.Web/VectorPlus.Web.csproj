@@ -14,6 +14,7 @@
     <Folder Include="Service\Helpers\" />
     <Folder Include="Views\Connection\" />
     <Folder Include="Migrations\" />
+    <Folder Include="Service\Actions\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VectorPlus.Lib\VectorPlus.Lib.csproj">
