@@ -31,7 +31,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="McMaster.NETCore.Plugins" Version="1.3.0" />
-    <PackageReference Include="log4net" Version="2.0.8" />
+    <PackageReference Include="log4net" Version="2.0.10" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="obj\Debug\netcoreapp3.1\VectorPlus.Web.Views.dll" />
